@@ -2,7 +2,7 @@
 /**
  * Template for the "Settings" page in the admin panel (Phase 5).
  * Available variables (from AHP_Admin::render_settings_page):
- * $colors, $sms, $sms_overridden_by_constant, $admin_notify_mobile, $footer_text, $vat_percent
+ * $colors, $sms, $sms_overridden_by_constant, $admin_notify_mobile, $footer_text, $notice_text, $vat_percent
  */
 defined( 'ABSPATH' ) || exit;
 ?>
@@ -80,6 +80,13 @@ defined( 'ABSPATH' ) || exit;
 
         <h2 class="title"><?php esc_html_e( 'Proforma invoice content', 'ahan-proforma' ); ?></h2>
         <table class="form-table" role="presentation">
+            <tr>
+                <th scope="row"><label for="ahp_invoice_notice_text"><?php esc_html_e( 'Notice text under the print button', 'ahan-proforma' ); ?></label></th>
+                <td>
+                    <textarea id="ahp_invoice_notice_text" name="ahp_invoice_notice_text" rows="3" class="large-text"><?php echo esc_textarea( $notice_text ); ?></textarea>
+                    <p class="description"><?php esc_html_e( 'Plain text only (no HTML). Shown next to a warning icon, right below the print button.', 'ahan-proforma' ); ?></p>
+                </td>
+            </tr>
             <tr>
                 <th scope="row"><label for="ahp_invoice_footer_text"><?php esc_html_e( 'Text at the bottom of the proforma-invoice document', 'ahan-proforma' ); ?></label></th>
                 <td>

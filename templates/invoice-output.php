@@ -139,6 +139,29 @@ $site_name = get_bloginfo( 'name' );
         cursor: pointer;
         font-family: inherit;
     }
+    /* Admin-configurable notice line, right under the print button
+       (AHP_Admin::get_invoice_notice_text). Kept visible in print/PDF
+       output too — unlike the print button itself — since it's part of
+       the document content, not a UI control. */
+    .ahp-inv-notice {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 20px;
+        padding: 10px 14px;
+        background: #fef3c7;
+        border: 1px solid #fde68a;
+        border-radius: 10px;
+        font-size: 13px;
+        color: #92400e;
+        line-height: 1.6;
+    }
+    .ahp-inv-notice svg {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        margin-top: 1px;
+    }
     @media print {
         .ahp-inv-print-btn { display: none; }
         body { padding: 0; }
@@ -188,6 +211,16 @@ do_action( 'ahp_invoice_output_head' );
     <button type="button" class="ahp-inv-print-btn" onclick="window.print()">
         <?php esc_html_e( 'چاپ / ذخیرهٔ PDF', 'ahan-proforma' ); ?>
     </button>
+
+    <?php $ahp_notice_text = AHP_Admin::get_invoice_notice_text(); ?>
+    <?php if ( '' !== trim( (string) $ahp_notice_text ) ) : ?>
+    <div class="ahp-inv-notice">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span><?php echo esc_html( $ahp_notice_text ); ?></span>
+    </div>
+    <?php endif; ?>
 
     <div class="ahp-inv-header">
         <div>

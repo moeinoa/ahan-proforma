@@ -49,6 +49,10 @@ class AHP_Admin {
     // Farapayamak itself accepts this format.
     public const OPT_ADMIN_NOTIFY_MOBILE = 'ahp_admin_notify_mobile';
     public const OPT_INVOICE_FOOTER      = 'ahp_invoice_footer_text';
+    // Warning/notice line shown right under the print button (Phase 5
+    // addendum), e.g. reminding the customer this proforma is not a final
+    // invoice. Plain text — no HTML, unlike the footer text below.
+    public const OPT_INVOICE_NOTICE      = 'ahp_invoice_notice_text';
     public const OPT_VAT_RATE            = 'ahp_vat_rate'; // decimal value, e.g. 0.10 for 10%
 
     /** Default values — exactly the values that were hardcoded in the code
@@ -323,6 +327,10 @@ class AHP_Admin {
         // stripped but the editor's safe tags (p, table, img, strong, ...) are kept.
         register_setting( self::SETTINGS_GROUP, self::OPT_INVOICE_FOOTER, [ 'sanitize_callback' => 'wp_kses_post' ] );
 
+        // Notice text: a plain textarea, no HTML allowed (unlike the footer
+        // field above), since it's just a short warning line next to an icon.
+        register_setting( self::SETTINGS_GROUP, self::OPT_INVOICE_NOTICE, [ 'sanitize_callback' => 'sanitize_textarea_field' ] );
+
         register_setting( self::SETTINGS_GROUP, self::OPT_VAT_RATE, [
             'sanitize_callback' => [ __CLASS__, 'sanitize_vat_rate' ],
         ] );
@@ -364,9 +372,10 @@ class AHP_Admin {
         $sms_overridden_by_constant = defined( 'AHP_SMS_USERNAME' ) || defined( 'AHP_SMS_PASSWORD' ) || defined( 'AHP_SMS_FROM' );
 
         $footer_text = get_option( self::OPT_INVOICE_FOOTER, self::default_footer_text() );
+        $notice_text = get_option( self::OPT_INVOICE_NOTICE, self::default_notice_text() );
         $vat_percent = round( self::get_vat_rate() * 100, 2 );
 
-        include AHP_PLUGIN_DIR . 'templates/admin-settings.php'; // + $admin_notify_mobile
+        include AHP_PLUGIN_DIR . 'templates/admin-settings.php'; // + $admin_notify_mobile, $notice_text
     }
 
     /* ── Values consumed by the rest of the plugin ─────────────────────────── */
@@ -392,6 +401,15 @@ class AHP_Admin {
 
     private static function default_footer_text(): string {
         return __( 'This is a proforma document and is not an official sales invoice until finally approved.', 'ahan-proforma' );
+    }
+
+    /** Warning/notice text shown under the print button; used by templates/invoice-output.php */
+    public static function get_invoice_notice_text(): string {
+        return get_option( self::OPT_INVOICE_NOTICE, self::default_notice_text() );
+    }
+
+    private static function default_notice_text(): string {
+        return __( 'Please review all information carefully before printing or saving as PDF.', 'ahan-proforma' );
     }
 
     /**
