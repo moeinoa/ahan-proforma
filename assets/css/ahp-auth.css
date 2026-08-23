@@ -1,0 +1,484 @@
+/* Ahan Proforma — استایل فرم ورود/ثبت‌نام (OTP) + پاپ‌آپ
+ * ------------------------------------------------------------------------
+ * از همان متغیرهای CSS مشترک (--ahp-primary و...) که در ahp-cart.css تعریف
+ * شده استفاده می‌کند تا در فاز ۵ (تنظیمات رنگ از پنل ادمین) هر دو فایل
+ * هم‌زمان و بدون دوباره‌کاری به‌روزرسانی شوند.
+ *
+ * دو زمینهٔ استفاده:
+ *   ۱) داخل مودال مرکزی (templates/auth-modal.php) — حالت اصلی
+ *   ۲) به‌صورت مستقل روی یک صفحه (templates/login.php، شورت‌کد [ahp_login])
+ */
+
+/* ── آیکون ورود/ثبت‌نام یا حساب کاربری برای هدر ([ahp_login_button]) ──────
+   دقیقاً هم‌اندازه و هم‌سبک با آیکون سبد (.ahp-cart-icon-btn در
+   ahp-cart.css) تا در هدر کنار هم یکدست دیده شوند. */
+
+.ahp-auth-icon-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+.ahp-auth-icon-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: var(--ahp-primary-light, #e6f7ee);
+    color: var(--ahp-primary-dark, #0b7a44);
+    cursor: pointer;
+    transition: transform var(--ahp-transition, .28s ease), background var(--ahp-transition, .28s ease), box-shadow var(--ahp-transition, .28s ease);
+}
+
+.ahp-auth-icon-btn:hover {
+    background: var(--ahp-primary, #0f9d58);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(15, 157, 88, .3);
+    transform: translateY(-1px);
+}
+
+.ahp-auth-icon-btn:active {
+    transform: translateY(0) scale(.96);
+}
+
+/* وقتی کاربر لاگین است، آیکون کمی متمایز شود (پرشده به‌جای روشن) تا با
+   نگاه اول از حالت مهمان قابل تشخیص باشد */
+.ahp-auth-icon-btn-active {
+    background: var(--ahp-primary, #0f9d58);
+    color: #fff;
+}
+
+.ahp-auth-icon-btn-active:hover {
+    background: var(--ahp-primary-dark, #0b7a44);
+}
+
+/* ── منوی حساب کاربری (dropdown مینیمال) ─────────────────────────────────── */
+
+.ahp-account-menu-root {
+    position: relative;
+}
+
+.ahp-account-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    inset-inline-end: 0;
+    min-width: 190px;
+    padding: 8px;
+    background: var(--ahp-bg, #fff);
+    border: 1px solid var(--ahp-border, #e5e7eb);
+    border-radius: var(--ahp-radius, 14px);
+    box-shadow: var(--ahp-shadow-lg, 0 16px 40px rgba(15, 23, 42, .18));
+    z-index: 9999;
+    animation: ahp-auth-fade-in .18s ease;
+}
+
+.ahp-account-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ahp-text, #1f2937);
+    text-decoration: none;
+    border-radius: 9px;
+    transition: background var(--ahp-transition, .28s ease), color var(--ahp-transition, .28s ease);
+}
+
+.ahp-account-menu-item svg {
+    flex-shrink: 0;
+    color: var(--ahp-primary, #0f9d58);
+}
+
+.ahp-account-menu-item:hover {
+    background: var(--ahp-bg-soft, #f3f4f6);
+}
+
+.ahp-account-menu-item-danger {
+    color: var(--ahp-accent, #d0342c);
+}
+
+.ahp-account-menu-item-danger svg {
+    color: var(--ahp-accent, #d0342c);
+}
+
+.ahp-account-menu-item-danger:hover {
+    background: color-mix(in srgb, var(--ahp-accent, #d0342c) 8%, transparent);
+}
+
+/* ── overlay + مودال مرکزی ────────────────────────────────────────────── */
+
+.ahp-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .5);
+    backdrop-filter: blur(3px);
+    z-index: 10000000000000000;
+    opacity: 0;
+    transition: opacity var(--ahp-transition, .28s ease);
+}
+
+.ahp-modal-overlay.ahp-visible {
+    opacity: 1;
+}
+
+
+
+.ahp-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    inset-inline-start: 50%;
+    width: min(420px, calc(100vw - 32px));
+    max-height: min(640px, calc(100vh - 48px));
+    overflow-y: auto;
+    background: var(--ahp-bg, #fff);
+    border-radius: var(--ahp-radius-lg, 18px);
+    box-shadow: var(--ahp-shadow-lg, 0 24px 60px rgba(15, 23, 42, .25));
+    z-index: 10000000000000001;
+    transform: translate(50%, -50%) scale(.96);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .32s cubic-bezier(.32, .72, 0, 1), opacity .24s ease;
+}
+
+.ahp-modal.ahp-open {
+    transform: translate(50%,-50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.ahp-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 24px 4px;
+}
+
+.ahp-modal-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ahp-text, #1f2937);
+}
+
+.ahp-modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: var(--ahp-text-muted, #6b7280);
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background var(--ahp-transition, .28s ease), color var(--ahp-transition, .28s ease);
+}
+
+.ahp-modal-close:hover {
+    background: var(--ahp-bg-soft, #f3f4f6);
+    color: var(--ahp-text, #1f2937);
+}
+
+.ahp-modal-body {
+    padding: 8px 24px 26px;
+}
+
+/* در حالت مودال، خودِ ahp-auth-wrap دیگر کارت/سایه/بوردر جدا لازم ندارد
+   چون خودِ .ahp-modal این ظاهر را دارد؛ در حالت مستقل (صفحهٔ fallback)
+   ahp-auth-wrap خودش کارت کامل است (قوانین پایین همین فایل). */
+.ahp-modal .ahp-auth-wrap {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* ── فرم (مشترک بین مودال و صفحهٔ مستقل) ─────────────────────────────────── */
+
+.ahp-auth-wrap {
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 28px;
+    background: var(--ahp-bg, #fff);
+    border: 1px solid var(--ahp-border, #e5e7eb);
+    border-radius: var(--ahp-radius, 14px);
+    box-shadow: var(--ahp-shadow-sm, 0 2px 8px rgba(15, 23, 42, .06));
+}
+
+.ahp-auth-intro {
+    margin: 0 0 18px;
+    font-size: 13.5px;
+    color: var(--ahp-text-muted, #6b7280);
+}
+
+.ahp-auth-field {
+    margin-bottom: 16px;
+}
+
+.ahp-auth-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ahp-text, #1f2937);
+}
+
+.ahp-auth-field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    border: 1.5px solid var(--ahp-border, #e5e7eb);
+    border-radius: 10px;
+    background: var(--ahp-bg-soft, #f9fafb);
+    color: var(--ahp-text, #1f2937);
+    transition: border-color var(--ahp-transition, .28s ease), box-shadow var(--ahp-transition, .28s ease), background var(--ahp-transition, .28s ease);
+}
+
+.ahp-auth-field input:focus {
+    outline: none;
+    border-color: var(--ahp-primary, #0f9d58);
+    box-shadow: 0 0 0 3px var(--ahp-primary-light, #e6f7ee);
+    background: var(--ahp-bg, #fff);
+}
+
+.ahp-auth-name-fields {
+    margin-bottom: 4px;
+    padding: 14px 14px 2px;
+    background: var(--ahp-bg-soft, #f9fafb);
+    border: 1px dashed var(--ahp-border, #e5e7eb);
+    border-radius: 12px;
+    animation: ahp-auth-fade-in .3s ease;
+}
+
+.ahp-auth-new-user-hint {
+    margin: 0 0 14px;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--ahp-primary-dark, #0b7a44);
+}
+
+.ahp-auth-name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@keyframes ahp-auth-fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── دکمهٔ ارسال با اسپینر لودینگ ─────────────────────────────────────────── */
+
+.ahp-auth-submit {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    color: #fff;
+    background: var(--ahp-primary, #0f9d58);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background var(--ahp-transition, .28s ease), transform .12s ease;
+}
+
+.ahp-auth-submit:hover:not(:disabled) {
+    background: var(--ahp-primary-dark, #0b7a44);
+}
+
+.ahp-auth-submit:active:not(:disabled) {
+    transform: scale(.985);
+}
+
+.ahp-auth-submit:disabled {
+    opacity: .75;
+    cursor: not-allowed;
+}
+
+.ahp-auth-submit .ahp-auth-spinner {
+    display: none;
+    width: 17px;
+    height: 17px;
+    margin-inline-start: 8px;
+    border: 2.5px solid rgba(255, 255, 255, .35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: ahp-auth-spin .7s linear infinite;
+}
+
+.ahp-auth-submit.is-loading .ahp-auth-btn-label {
+    opacity: .85;
+}
+
+.ahp-auth-submit.is-loading .ahp-auth-spinner {
+    display: inline-block;
+}
+
+@keyframes ahp-auth-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── خطاها ────────────────────────────────────────────────────────────── */
+
+.ahp-auth-error {
+    margin: -6px 0 14px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: var(--ahp-accent, #d0342c);
+    background: color-mix(in srgb, var(--ahp-accent, #d0342c) 8%, transparent);
+    border-radius: 8px;
+    animation: ahp-auth-fade-in .2s ease;
+}
+
+/* ── مرحلهٔ کد: دکمهٔ بازگشت + عنوان + راهنما ─────────────────────────────── */
+
+.ahp-auth-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 14px;
+    padding: 0;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--ahp-text-muted, #6b7280);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color var(--ahp-transition, .28s ease);
+}
+
+.ahp-auth-back svg {
+    transform: scaleX(-1); /* در RTL جهت پیکان برعکس می‌شود */
+}
+
+html[dir="rtl"] .ahp-auth-back svg {
+    transform: scaleX(1);
+}
+
+.ahp-auth-back:hover {
+    color: var(--ahp-primary, #0f9d58);
+}
+
+.ahp-auth-step-title {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ahp-text, #1f2937);
+	display: none
+}
+
+.ahp-auth-code-hint {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: var(--ahp-text-muted, #6b7280);
+}
+
+.ahp-auth-code-hint strong {
+    color: var(--ahp-text, #1f2937);
+    direction: ltr;
+    display: inline-block;
+}
+
+.ahp-auth-step-code input[data-ahp-auth-code] {
+    text-align: center;
+    letter-spacing: 8px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.ahp-auth-resend {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--ahp-primary, #0f9d58);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color var(--ahp-transition, .28s ease);
+}
+
+.ahp-auth-resend:disabled {
+    color: var(--ahp-text-muted, #6b7280);
+    cursor: not-allowed;
+}
+
+.ahp-auth-resend:not(:disabled):hover {
+    color: var(--ahp-primary-dark, #0b7a44);
+    text-decoration: underline;
+}
+
+/* ── مرحلهٔ موفقیت ────────────────────────────────────────────────────────── */
+
+.ahp-auth-step-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 8px;
+    text-align: center;
+    animation: ahp-auth-fade-in .3s ease;
+}
+
+.ahp-auth-success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 14px;
+    color: #fff;
+    background: var(--ahp-primary, #0f9d58);
+    border-radius: 50%;
+    animation: ahp-auth-pop .35s cubic-bezier(.32, 1.3, .5, 1);
+}
+
+@keyframes ahp-auth-pop {
+    from { transform: scale(.6); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.ahp-auth-step-success p {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ahp-text, #1f2937);
+}
+
+.ahp-already-logged-in {
+    text-align: center;
+    color: var(--ahp-text-muted, #6b7280);
+}
+
+/* ── ریسپانسیو ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+    .ahp-modal {
+        width: calc(100vw - 24px);
+    }
+    .ahp-modal-body {
+        padding: 8px 18px 20px;
+    }
+    .ahp-modal-header {
+        padding: 18px 18px 4px;
+    }
+}

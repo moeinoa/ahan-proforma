@@ -1,0 +1,812 @@
+# Copyright (C) 2026 Ahan Shahr
+# This file is distributed under the same license as the Ahan Proforma package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ahan Proforma 0.9.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: ahan-proforma\n"
+
+#: ahan-proforma.php:104
+msgid ""
+"The \"Ahan Price Tables\" plugin was not found or is inactive. The proforma "
+"plugin still works without it, but the \"Add to invoice\" button will not "
+"appear on price tables."
+msgstr ""
+"The \"Ahan Price Tables\" plugin was not found or is inactive. The proforma "
+"plugin still works without it, but the \"Add to invoice\" button will not "
+"appear on price tables."
+
+#: ahan-proforma.php:122
+#, php-format
+msgid ""
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
+" not work. Go to %s to set it up."
+msgstr ""
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
+" not work. Go to %s to set it up."
+
+#: ahan-proforma.php:123
+msgid "Ahan Proforma ▸ Settings"
+msgstr "Ahan Proforma ▸ Settings"
+
+#: templates/admin-settings.php:10
+msgid "Ahan Shahr Proforma Settings"
+msgstr "Ahan Shahr Proforma Settings"
+
+#: templates/admin-settings.php:15
+msgid ""
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
+" in wp-config.php and currently takes priority over the values on this page."
+" To manage everything from this panel, remove those constants from wp-"
+"config.php."
+msgstr ""
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
+" in wp-config.php and currently takes priority over the values on this page."
+" To manage everything from this panel, remove those constants from wp-"
+"config.php."
+
+#: templates/admin-settings.php:23
+msgid "Color and style"
+msgstr "Color and style"
+
+#: templates/admin-settings.php:24
+msgid ""
+"All of the plugin's colors (price-table buttons, proforma cart, login form, "
+"account page, proforma-invoice document) are read from these fields. If a "
+"field is left empty, the plugin's default color is used."
+msgstr ""
+"All of the plugin's colors (price-table buttons, proforma cart, login form, "
+"account page, proforma-invoice document) are read from these fields. If a "
+"field is left empty, the plugin's default color is used."
+
+#: templates/admin-settings.php:27
+msgid "Primary color"
+msgstr "Primary color"
+
+#: templates/admin-settings.php:31
+msgid "Primary Dark color"
+msgstr "Primary Dark color"
+
+#: templates/admin-settings.php:35
+msgid "Primary Light color"
+msgstr "Primary Light color"
+
+#: templates/admin-settings.php:39
+msgid "Accent color"
+msgstr "Accent color"
+
+#: templates/admin-settings.php:43
+msgid "\"Call us\" button color (hover)"
+msgstr "\"Call us\" button color (hover)"
+
+#: templates/admin-settings.php:47
+msgid "\"Call us\" button text color"
+msgstr "\"Call us\" button text color"
+
+#: templates/admin-settings.php:51
+msgid "\"Call us\" button background color"
+msgstr "\"Call us\" button background color"
+
+#: templates/admin-settings.php:56
+msgid "Farapayamak SMS panel"
+msgstr "Farapayamak SMS panel"
+
+#: templates/admin-settings.php:59
+msgid "Username"
+msgstr "Username"
+
+#: templates/admin-settings.php:63
+msgid "Password"
+msgstr "Password"
+
+#: templates/admin-settings.php:67
+msgid "Sender number (from)"
+msgstr "Sender number (from)"
+
+#: templates/admin-settings.php:72
+msgid "Admin SMS notification"
+msgstr "Admin SMS notification"
+
+#: templates/admin-settings.php:73
+msgid ""
+"When each new proforma invoice is submitted, a text SMS is sent to the "
+"number(s) below. For multiple numbers, separate them with a comma (,). If "
+"left empty, this SMS is not sent."
+msgstr ""
+"When each new proforma invoice is submitted, a text SMS is sent to the "
+"number(s) below. For multiple numbers, separate them with a comma (,). If "
+"left empty, this SMS is not sent."
+
+#: templates/admin-settings.php:76
+msgid "Admin mobile number(s)"
+msgstr "Admin mobile number(s)"
+
+#: templates/admin-settings.php:81
+msgid "Proforma invoice content"
+msgstr "Proforma invoice content"
+
+#: templates/admin-settings.php:84
+msgid "Text at the bottom of the proforma-invoice document"
+msgstr "Text at the bottom of the proforma-invoice document"
+
+#: templates/admin-settings.php:104
+msgid "Tax"
+msgstr "Tax"
+
+#: templates/admin-settings.php:107
+msgid "VAT rate (%)"
+msgstr "VAT rate (%)"
+
+#: templates/admin-settings.php:110
+msgid "For example, enter 10 for 10%."
+msgstr "For example, enter 10 for 10%."
+
+#: templates/admin-settings.php:115
+msgid "Save settings"
+msgstr "Save settings"
+
+#: templates/cart-icon.php:10 templates/cart.php:11
+#: templates/cart-drawer.php:13 templates/auth-icon.php:53
+#: templates/account-page.php:19 includes/class-ahp-cart.php:416
+msgid "Proforma cart"
+msgstr "Proforma cart"
+
+#: templates/cart.php:14 templates/cart-drawer.php:22
+msgid "Loading…"
+msgstr "Loading…"
+
+#: templates/cart.php:19 templates/cart-drawer.php:27
+msgid "Grand total"
+msgstr "Grand total"
+
+#: templates/cart.php:20 templates/cart-drawer.php:28
+#: templates/account-tab-invoices.php:35 templates/admin-invoices-list.php:150
+msgid "Toman"
+msgstr "Toman"
+
+#: templates/cart.php:23 templates/cart-drawer.php:35
+msgid "Issue proforma invoice"
+msgstr "Issue proforma invoice"
+
+#: templates/cart-drawer.php:14 templates/auth-modal.php:18
+#: includes/class-ahp-cart.php:415
+msgid "Close"
+msgstr "Close"
+
+#: templates/cart-drawer.php:32
+msgid "View proforma cart"
+msgstr "View proforma cart"
+
+#: templates/auth-modal.php:16 templates/auth-icon.php:29
+msgid "Log in / Sign up"
+msgstr "Log in / Sign up"
+
+#: templates/account-tab-invoices.php:16 templates/account-page.php:16
+msgid "My proforma invoices"
+msgstr "My proforma invoices"
+
+#: templates/account-tab-invoices.php:20
+msgid ""
+"No proforma invoices have been issued for you yet. Any proforma invoices you"
+" issue will show up here."
+msgstr ""
+"No proforma invoices have been issued for you yet. Any proforma invoices you"
+" issue will show up here."
+
+#: templates/account-tab-invoices.php:39
+msgid "View"
+msgstr "View"
+
+#: templates/auth-icon.php:39 templates/auth-icon.php:49
+msgid "Account"
+msgstr "Account"
+
+#: templates/auth-icon.php:57 templates/account-tab-edit.php:12
+#: templates/account-page.php:22
+msgid "Edit information"
+msgstr "Edit information"
+
+#: templates/auth-icon.php:61
+msgid "Log out"
+msgstr "Log out"
+
+#: templates/admin-invoices-list.php:12 includes/class-ahp-cart.php:384
+msgid "kg"
+msgstr "kg"
+
+#: templates/admin-invoices-list.php:13 includes/class-ahp-cart.php:384
+msgid "bundle"
+msgstr "bundle"
+
+#: templates/admin-invoices-list.php:17
+msgid "Ahan Shahr Proforma Invoices"
+msgstr "Ahan Shahr Proforma Invoices"
+
+#: templates/admin-invoices-list.php:20
+msgid "The proforma invoice status was updated successfully."
+msgstr "The proforma invoice status was updated successfully."
+
+#: templates/admin-invoices-list.php:22
+msgid "The status update failed; the input was invalid."
+msgstr "The status update failed; the input was invalid."
+
+#: templates/admin-invoices-list.php:24
+msgid ""
+"The proforma invoice row was updated and the document total was recomputed."
+msgstr ""
+"The proforma invoice row was updated and the document total was recomputed."
+
+#: templates/admin-invoices-list.php:26
+msgid ""
+"The proforma invoice row was deleted and the document total was recomputed."
+msgstr ""
+"The proforma invoice row was deleted and the document total was recomputed."
+
+#: templates/admin-invoices-list.php:28
+msgid "Saving the row failed; the input was invalid."
+msgstr "Saving the row failed; the input was invalid."
+
+#: templates/admin-invoices-list.php:50
+msgid ""
+"Click a proforma invoice's number to view and edit its line items "
+"(description, unit, quantity, price). The document total is automatically "
+"recomputed after any row change; editing is always possible regardless of "
+"the proforma invoice's status."
+msgstr ""
+"Click a proforma invoice's number to view and edit its line items "
+"(description, unit, quantity, price). The document total is automatically "
+"recomputed after any row change; editing is always possible regardless of "
+"the proforma invoice's status."
+
+#: templates/admin-invoices-list.php:57
+msgid "Proforma invoice number"
+msgstr "Proforma invoice number"
+
+#: templates/admin-invoices-list.php:58
+msgid "Buyer"
+msgstr "Buyer"
+
+#: templates/admin-invoices-list.php:59
+msgid "Contact number"
+msgstr "Contact number"
+
+#: templates/admin-invoices-list.php:60
+msgid "Final amount (Toman)"
+msgstr "Final amount (Toman)"
+
+#: templates/admin-invoices-list.php:61
+msgid "Status"
+msgstr "Status"
+
+#: templates/admin-invoices-list.php:62
+msgid "Date issued"
+msgstr "Date issued"
+
+#: templates/admin-invoices-list.php:63 templates/admin-invoices-list.php:125
+msgid "Actions"
+msgstr "Actions"
+
+#: templates/admin-invoices-list.php:68
+msgid "No proforma invoices were found."
+msgstr "No proforma invoices were found."
+
+#: templates/admin-invoices-list.php:78
+msgid "Show/hide items"
+msgstr "Show/hide items"
+
+#: templates/admin-invoices-list.php:88
+msgid "View document"
+msgstr "View document"
+
+#: templates/admin-invoices-list.php:111
+msgid "Apply"
+msgstr "Apply"
+
+#: templates/admin-invoices-list.php:120
+msgid "Product description"
+msgstr "Product description"
+
+#: templates/admin-invoices-list.php:121 includes/class-ahp-cart.php:423
+msgid "Unit"
+msgstr "Unit"
+
+#: templates/admin-invoices-list.php:122 templates/admin-invoices-list.php:148
+msgid "Quantity"
+msgstr "Quantity"
+
+#: templates/admin-invoices-list.php:123 templates/admin-invoices-list.php:149
+msgid "Unit price (Toman)"
+msgstr "Unit price (Toman)"
+
+#: templates/admin-invoices-list.php:124
+msgid "Line total (Toman)"
+msgstr "Line total (Toman)"
+
+#: templates/admin-invoices-list.php:130
+msgid "This proforma invoice has no rows."
+msgstr "This proforma invoice has no rows."
+
+#: templates/admin-invoices-list.php:151 templates/account-tab-edit.php:29
+msgid "Save"
+msgstr "Save"
+
+#: templates/admin-invoices-list.php:153 includes/class-ahp-cart.php:414
+msgid "Remove this row?"
+msgstr "Remove this row?"
+
+#: templates/admin-invoices-list.php:159
+msgid "Delete"
+msgstr "Delete"
+
+#: templates/admin-invoices-list.php:184
+msgid "&laquo; Previous"
+msgstr "&laquo; Previous"
+
+#: templates/admin-invoices-list.php:185
+msgid "Next &raquo;"
+msgstr "Next &raquo;"
+
+#: templates/account-tab-edit.php:15
+msgid "First and last name"
+msgstr "First and last name"
+
+#: templates/account-tab-edit.php:18 templates/auth-form.php:35
+#: includes/class-ahp-auth.php:394
+msgid "First name"
+msgstr "First name"
+
+#: templates/account-tab-edit.php:23 templates/auth-form.php:39
+#: includes/class-ahp-auth.php:395
+msgid "Last name"
+msgstr "Last name"
+
+#: templates/account-tab-edit.php:35 templates/auth-form.php:22
+#: includes/class-ahp-user-fields.php:43 includes/class-ahp-user-fields.php:48
+#: includes/class-ahp-user-fields.php:88
+msgid "Mobile number"
+msgstr "Mobile number"
+
+#: templates/account-tab-edit.php:37
+msgid "Current number:"
+msgstr "Current number:"
+
+#: templates/account-tab-edit.php:44
+msgid "New mobile number"
+msgstr "New mobile number"
+
+#: templates/account-tab-edit.php:49 includes/class-ahp-account.php:108
+msgid "Send verification code"
+msgstr "Send verification code"
+
+#: templates/account-tab-edit.php:56 templates/auth-form.php:67
+#: includes/class-ahp-account.php:105 includes/class-ahp-auth.php:402
+msgid "A verification code was sent to the number below:"
+msgstr "A verification code was sent to the number below:"
+
+#: templates/account-tab-edit.php:60 templates/auth-form.php:72
+#: includes/class-ahp-account.php:106 includes/class-ahp-auth.php:396
+msgid "5-digit code"
+msgstr "5-digit code"
+
+#: templates/account-tab-edit.php:65 includes/class-ahp-account.php:107
+msgid "Verify and apply"
+msgstr "Verify and apply"
+
+#: templates/account-tab-edit.php:66 includes/class-ahp-account.php:111
+msgid "Cancel"
+msgstr "Cancel"
+
+#: templates/auth-form.php:18
+msgid "Enter your mobile number to continue."
+msgstr "Enter your mobile number to continue."
+
+#: templates/auth-form.php:31 includes/class-ahp-auth.php:406
+msgid ""
+"Your number isn't registered on the site yet; enter your name to create an "
+"account."
+msgstr ""
+"Your number isn't registered on the site yet; enter your name to create an "
+"account."
+
+#: templates/auth-form.php:48 includes/class-ahp-auth.php:397
+msgid "Continue"
+msgstr "Continue"
+
+#: templates/auth-form.php:59
+msgid "Change mobile number"
+msgstr "Change mobile number"
+
+#: templates/auth-form.php:63 includes/class-ahp-auth.php:404
+msgid "Log in to your account"
+msgstr "Log in to your account"
+
+#: templates/auth-form.php:81 includes/class-ahp-auth.php:398
+msgid "Verify and log in"
+msgstr "Verify and log in"
+
+#: templates/auth-form.php:86 includes/class-ahp-account.php:109
+#: includes/class-ahp-auth.php:399
+msgid "Resend code"
+msgstr "Resend code"
+
+#: templates/auth-form.php:98 includes/class-ahp-auth.php:222
+#: includes/class-ahp-auth.php:407
+msgid "Logged in successfully."
+msgstr "Logged in successfully."
+
+#: templates/invoice-output.php:189
+msgid "چاپ / ذخیرهٔ PDF"
+msgstr "چاپ / ذخیرهٔ PDF"
+
+#: templates/invoice-output.php:195
+msgid "پیش‌فاکتور فروش"
+msgstr "پیش‌فاکتور فروش"
+
+#: templates/invoice-output.php:206
+msgid "خریدار"
+msgstr "خریدار"
+
+#: templates/invoice-output.php:211
+msgid "فروشنده"
+msgstr "فروشنده"
+
+#: templates/invoice-output.php:220
+msgid "شرح کالا"
+msgstr "شرح کالا"
+
+#: templates/invoice-output.php:221
+msgid "واحد"
+msgstr "واحد"
+
+#: templates/invoice-output.php:222
+msgid "تعداد"
+msgstr "تعداد"
+
+#: templates/invoice-output.php:223
+msgid "قیمت واحد (تومان)"
+msgstr "قیمت واحد (تومان)"
+
+#: templates/invoice-output.php:224
+msgid "مبلغ کل (تومان)"
+msgstr "مبلغ کل (تومان)"
+
+#: templates/invoice-output.php:237
+msgid "کیلوگرم"
+msgstr "کیلوگرم"
+
+#: templates/invoice-output.php:237
+msgid "شاخه"
+msgstr "شاخه"
+
+#: templates/invoice-output.php:249
+msgid "جمع جزء"
+msgstr "جمع جزء"
+
+#: templates/invoice-output.php:250 templates/invoice-output.php:258
+#: templates/invoice-output.php:262
+msgid "تومان"
+msgstr "تومان"
+
+#: templates/invoice-output.php:255
+#, php-format
+msgid "مالیات بر ارزش افزوده (%s٪)"
+msgstr "مالیات بر ارزش افزوده (%s٪)"
+
+#: templates/invoice-output.php:261
+msgid "مبلغ نهایی"
+msgstr "مبلغ نهایی"
+
+#: includes/class-ahp-user-fields.php:85
+msgid "Ahan Shahr Customer Information"
+msgstr "Ahan Shahr Customer Information"
+
+#: includes/class-ahp-user-fields.php:92
+msgid ""
+"This number is used for SMS-code login and cannot be changed from this page."
+msgstr ""
+"This number is used for SMS-code login and cannot be changed from this page."
+
+#: includes/class-ahp-helpers.php:111 includes/class-ahp-admin.php:174
+msgid "Pending review"
+msgstr "Pending review"
+
+#: includes/class-ahp-helpers.php:112 includes/class-ahp-admin.php:175
+msgid "Approved"
+msgstr "Approved"
+
+#: includes/class-ahp-helpers.php:113 includes/class-ahp-admin.php:176
+msgid "Rejected"
+msgstr "Rejected"
+
+#: includes/class-ahp-helpers.php:114 includes/class-ahp-admin.php:177
+msgid "Expired"
+msgstr "Expired"
+
+#: includes/class-ahp-invoice.php:54 includes/class-ahp-cart.php:351
+msgid "Please log in to your account first to issue a proforma invoice."
+msgstr "Please log in to your account first to issue a proforma invoice."
+
+#: includes/class-ahp-invoice.php:59 includes/class-ahp-cart.php:413
+msgid "Your proforma cart is empty."
+msgstr "Your proforma cart is empty."
+
+#: includes/class-ahp-invoice.php:108
+msgid "Error saving the proforma invoice; please try again."
+msgstr "Error saving the proforma invoice; please try again."
+
+#: includes/class-ahp-invoice.php:156
+#, php-format
+msgid "New proforma invoice issued: %1$s - Buyer: %2$s"
+msgstr "New proforma invoice issued: %1$s - Buyer: %2$s"
+
+#: includes/class-ahp-invoice.php:209
+msgid "You are not allowed to view this proforma invoice."
+msgstr "You are not allowed to view this proforma invoice."
+
+#: includes/class-ahp-invoice.php:210 includes/class-ahp-admin.php:138
+msgid "Access not allowed"
+msgstr "Access not allowed"
+
+#: includes/class-ahp-account.php:97
+msgid "Saving…"
+msgstr "Saving…"
+
+#: includes/class-ahp-account.php:98
+msgid "Saved."
+msgstr "Saved."
+
+#: includes/class-ahp-account.php:99 includes/class-ahp-auth.php:401
+msgid "Something went wrong; please try again."
+msgstr "Something went wrong; please try again."
+
+#: includes/class-ahp-account.php:100
+msgid "First name cannot be empty."
+msgstr "First name cannot be empty."
+
+#: includes/class-ahp-account.php:101
+msgid "Last name cannot be empty."
+msgstr "Last name cannot be empty."
+
+#: includes/class-ahp-account.php:102 includes/class-ahp-auth.php:400
+msgid "The mobile number is not valid."
+msgstr "The mobile number is not valid."
+
+#: includes/class-ahp-account.php:103 includes/class-ahp-account.php:156
+msgid "This is already your current number."
+msgstr "This is already your current number."
+
+#: includes/class-ahp-account.php:104 includes/class-ahp-account.php:162
+#: includes/class-ahp-account.php:196
+msgid "This number is already registered to another account."
+msgstr "This number is already registered to another account."
+
+#: includes/class-ahp-account.php:110 includes/class-ahp-account.php:207
+msgid "Mobile number changed successfully."
+msgstr "Mobile number changed successfully."
+
+#: includes/class-ahp-account.php:126
+msgid "First and last name cannot be empty."
+msgstr "First and last name cannot be empty."
+
+#: includes/class-ahp-account.php:138
+msgid "Information saved successfully."
+msgstr "Information saved successfully."
+
+#: includes/class-ahp-account.php:149 includes/class-ahp-auth.php:94
+msgid "The mobile number is invalid."
+msgstr "The mobile number is invalid."
+
+#: includes/class-ahp-account.php:171
+msgid "A verification code was sent to the new number."
+msgstr "A verification code was sent to the new number."
+
+#: includes/class-ahp-account.php:187 includes/class-ahp-auth.php:165
+msgid "The submitted data is invalid."
+msgstr "The submitted data is invalid."
+
+#: includes/class-ahp-account.php:216
+msgid "Please log in to your account first."
+msgstr "Please log in to your account first."
+
+#: includes/class-ahp-roles.php:47
+msgid "Ahan Shahr Customer"
+msgstr "Ahan Shahr Customer"
+
+#: includes/class-ahp-roles.php:63
+msgid "Proforma Invoice Manager"
+msgstr "Proforma Invoice Manager"
+
+#: includes/class-ahp-cart.php:304
+msgid "The row data is invalid."
+msgstr "The row data is invalid."
+
+#: includes/class-ahp-cart.php:313 includes/class-ahp-cart.php:324
+msgid "The row identifier is invalid."
+msgstr "The row identifier is invalid."
+
+#: includes/class-ahp-cart.php:328
+msgid "The requested row was not found."
+msgstr "The requested row was not found."
+
+#: includes/class-ahp-cart.php:362
+msgid "Proforma invoice issued successfully."
+msgstr "Proforma invoice issued successfully."
+
+#: includes/class-ahp-cart.php:411
+msgid "Added to proforma invoice"
+msgstr "Added to proforma invoice"
+
+#: includes/class-ahp-cart.php:412
+msgid "Error; please try again"
+msgstr "Error; please try again"
+
+#: includes/class-ahp-cart.php:417
+#: includes/class-ahp-table-integration.php:133
+#: includes/class-ahp-table-integration.php:146
+msgid "Add to invoice"
+msgstr "Add to invoice"
+
+#: includes/class-ahp-cart.php:418
+msgid "Issuing proforma invoice…"
+msgstr "Issuing proforma invoice…"
+
+#: includes/class-ahp-cart.php:419
+msgid "View my proforma invoices"
+msgstr "View my proforma invoices"
+
+#: includes/class-ahp-cart.php:420
+msgid "Increase quantity"
+msgstr "Increase quantity"
+
+#: includes/class-ahp-cart.php:421
+msgid "Decrease quantity"
+msgstr "Decrease quantity"
+
+#: includes/class-ahp-cart.php:422
+msgid "Description"
+msgstr "Description"
+
+#: includes/class-ahp-cart.php:424
+msgid "Qty"
+msgstr "Qty"
+
+#: includes/class-ahp-cart.php:425
+msgid "Unit price"
+msgstr "Unit price"
+
+#: includes/class-ahp-cart.php:426
+msgid "Total"
+msgstr "Total"
+
+#: includes/class-ahp-admin.php:106 includes/class-ahp-admin.php:107
+msgid "Ahan Shahr Proforma"
+msgstr "Ahan Shahr Proforma"
+
+#: includes/class-ahp-admin.php:117
+msgid "Proforma Invoices"
+msgstr "Proforma Invoices"
+
+#: includes/class-ahp-admin.php:118
+msgid "Invoices"
+msgstr "Invoices"
+
+#: includes/class-ahp-admin.php:126
+msgid "Proforma Settings"
+msgstr "Proforma Settings"
+
+#: includes/class-ahp-admin.php:127
+msgid "Settings"
+msgstr "Settings"
+
+#: includes/class-ahp-admin.php:137
+msgid "You are not allowed to access this page."
+msgstr "You are not allowed to access this page."
+
+#: includes/class-ahp-admin.php:173
+msgid "All"
+msgstr "All"
+
+#: includes/class-ahp-admin.php:394
+msgid ""
+"This is a proforma document and is not an official sales invoice until "
+"finally approved."
+msgstr ""
+"This is a proforma document and is not an official sales invoice until "
+"finally approved."
+
+#: includes/class-ahp-auth.php:101 includes/class-ahp-auth.php:272
+msgid "You have made too many requests; please try again shortly."
+msgstr "You have made too many requests; please try again shortly."
+
+#: includes/class-ahp-auth.php:117
+msgid "First and last name are required to sign up."
+msgstr "First and last name are required to sign up."
+
+#: includes/class-ahp-auth.php:139 includes/class-ahp-auth.php:289
+msgid "Sending the SMS failed; please try again later."
+msgstr "Sending the SMS failed; please try again later."
+
+#: includes/class-ahp-auth.php:144
+msgid "A verification code has been sent to you by SMS."
+msgstr "A verification code has been sent to you by SMS."
+
+#: includes/class-ahp-auth.php:171 includes/class-ahp-auth.php:305
+msgid "No code was found for this number; please request one again."
+msgstr "No code was found for this number; please request one again."
+
+#: includes/class-ahp-auth.php:175 includes/class-ahp-auth.php:308
+msgid ""
+"You have exceeded the allowed number of attempts; please request a new code."
+msgstr ""
+"You have exceeded the allowed number of attempts; please request a new code."
+
+#: includes/class-ahp-auth.php:179 includes/class-ahp-auth.php:311
+msgid "The code has expired; please request a new one."
+msgstr "The code has expired; please request a new one."
+
+#: includes/class-ahp-auth.php:184 includes/class-ahp-auth.php:315
+msgid "The code you entered is incorrect."
+msgstr "The code you entered is incorrect."
+
+#: includes/class-ahp-auth.php:199
+msgid "Error creating the account."
+msgstr "Error creating the account."
+
+#: includes/class-ahp-auth.php:221 includes/class-ahp-auth.php:408
+msgid "Signed up successfully; welcome!"
+msgstr "Signed up successfully; welcome!"
+
+#: includes/class-ahp-auth.php:393
+msgid "Mobile number (e.g. 0912xxxxxxx)"
+msgstr "Mobile number (e.g. 0912xxxxxxx)"
+
+#: includes/class-ahp-auth.php:405
+msgid "Create a new account"
+msgstr "Create a new account"
+
+#: includes/class-ahp-auth.php:416
+msgid "You are already logged in to your account."
+msgstr "You are already logged in to your account."
+
+#: includes/class-ahp-table-integration.php:62
+msgid "Buy"
+msgstr "Buy"
+
+#: includes/class-ahp-table-integration.php:219
+#, php-format
+msgid "Size: %s"
+msgstr "Size: %s"
+
+#: includes/class-ahp-table-integration.php:228
+#, php-format
+msgid "Thickness: %s"
+msgstr "Thickness: %s"
+
+#: includes/class-ahp-table-integration.php:282
+msgid "Call us"
+msgstr "Call us"
+
+#. Plugin header field, read by WordPress's get_plugin_data()
+msgid "Ahan Proforma"
+msgstr "Ahan Proforma"
+
+#. Plugin header field, read by WordPress's get_plugin_data()
+msgid ""
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
+" without requiring WooCommerce."
+msgstr ""
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
+" without requiring WooCommerce."
+
+#. Plugin header field (Author), read by WordPress's get_plugin_data()
+msgid "Moein Akbari"
+msgstr "Moein Akbari"

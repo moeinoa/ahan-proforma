@@ -1,0 +1,145 @@
+/* Ahan Proforma — استایل ستون «پیش‌فاکتور» در جداول قیمت
+ * دکمه‌ها به‌صورت آیکون گرد کوچک با tooltip سفارشی روی hover هستند
+ * (بدون متن دائمی روی جدول تا فشرده و مینیمال بماند).
+ *
+ * فاز ۵ (اصلاحیه): تمام رنگ‌های برند به var(--ahp-*) تبدیل شدند؛ مقادیر hex
+ * بعد از کاما در var() صرفاً fallback امن هستند (برای زمانی که هوک
+ * AHP_Admin::print_color_overrides به هر دلیلی اجرا نشود)، نه رنگ ثابت
+ * مستقل. مقدار واقعی همیشه از پنل «پیش‌فاکتور آهن‌شهر ▸ تنظیمات» خوانده و
+ * در <head> چاپ می‌شود. رنگ خاکستری خنثی (حالت غیرفعال/disabled) بخشی از
+ * برند نیست، هاردکد باقی می‌ماند.
+ */
+
+.ahp-col-header {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.ahp-col-action {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* ── پایهٔ مشترک دکمه/لینک آیکونی ────────────────────────────────────── */
+
+.ahp-add-btn,
+.ahp-contact-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease;
+	z-index: 0;
+}
+
+.ahp-btn-icon {
+    display: inline-flex;
+    line-height: 0;
+    pointer-events: none;
+}
+
+.ahp-btn-icon svg {
+    display: block;
+}
+
+/* ── دکمهٔ افزودن به پیش‌فاکتور ───────────────────────────────────────── */
+
+.ahp-add-btn {
+    background-color: var(--ahp-primary-light, #e6f7ee);
+    color: var(--ahp-primary-dark, #0b7a44);
+}
+
+.ahp-add-btn:hover {
+    background-color: var(--ahp-primary, #0f9d58);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(15, 157, 88, .28);
+}
+
+.ahp-add-btn:active {
+    transform: translateY(0) scale(.94);
+}
+
+.ahp-add-btn:disabled {
+    background-color: #eef0f2;
+    color: #a2aab3;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* حالت لحظه‌ای بعد از افزودن موفق (کلاس ahp-added توسط JS اضافه/حذف می‌شود) */
+.ahp-add-btn.ahp-added {
+    background-color: var(--ahp-primary, #0f9d58);
+    color: #fff;
+}
+
+/* ── دکمهٔ تماس بگیرید ────────────────────────────────────────────────── */
+
+.ahp-contact-btn {
+    background-color: var(--ahp-contact-light, #fdf1e2);
+    color: var(--ahp-contact-dark, #b3721f);
+}
+
+.ahp-contact-btn:hover {
+    background-color: var(--ahp-contact, #c9862c);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(201, 134, 44, .28);
+}
+
+.ahp-contact-btn--disabled {
+    background-color: #f1f1f1;
+    color: #a6a6a6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ── Tooltip سفارشی (روی hover/focus هر دو دکمه) ─────────────────────── */
+
+.ahp-btn-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: calc(100% + 22px);
+    transform: translateX(-50%) translateY(4px);
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 7px;
+    background-color: var(--ahp-text, #1f2937);
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 500;
+    line-height: 1.4;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 20;
+    transition: opacity .16s ease, transform .16s ease, visibility .16s;
+}
+
+.ahp-btn-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 15%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--ahp-text, #1f2937);
+}
+
+.ahp-add-btn:hover .ahp-btn-tooltip,
+.ahp-add-btn:focus-visible .ahp-btn-tooltip,
+.ahp-contact-btn:hover .ahp-btn-tooltip,
+.ahp-contact-btn:focus-visible .ahp-btn-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}

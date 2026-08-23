@@ -1,0 +1,240 @@
+/* Ahan Proforma — استایل صفحهٔ حساب کاربری (فاز ۶)
+ * از همان متغیرهای CSS تعریف‌شده در ahp-auth.css/ahp-cart.css استفاده می‌کند
+ * (بدون تعریف مجدد :root؛ چون ahp-auth یک dependency ثبت‌شده برای این فایل است).
+ */
+
+.ahp-account-guest {
+    text-align: center;
+    color: var(--ahp-text-muted);
+    padding: 32px 16px;
+}
+
+.ahp-account-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.ahp-account-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--ahp-border);
+    margin-bottom: 24px;
+}
+
+.ahp-account-tab {
+    padding: 12px 18px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ahp-text-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color var(--ahp-transition), border-color var(--ahp-transition);
+}
+
+.ahp-account-tab:hover {
+    color: var(--ahp-text);
+}
+
+.ahp-account-tab.is-active {
+    color: var(--ahp-primary);
+    border-bottom-color: var(--ahp-primary);
+}
+
+.ahp-account-panel-title {
+    margin: 0 0 20px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ahp-text);
+}
+
+.ahp-account-empty {
+    text-align: center;
+    color: var(--ahp-text-muted);
+    padding: 48px 16px;
+    font-size: 14.5px;
+    background: var(--ahp-bg-soft);
+    border-radius: var(--ahp-radius);
+}
+
+/* ── لیست پیش‌فاکتورها ────────────────────────────────────────────────── */
+
+.ahp-invoice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ahp-invoice-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--ahp-bg);
+    border: 1px solid var(--ahp-border);
+    border-radius: var(--ahp-radius);
+    flex-wrap: wrap;
+    transition: border-color var(--ahp-transition), box-shadow var(--ahp-transition);
+}
+
+.ahp-invoice-card:hover {
+    border-color: var(--ahp-primary);
+    box-shadow: var(--ahp-shadow-sm);
+}
+
+.ahp-invoice-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ahp-invoice-view-btn {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    background: var(--ahp-primary);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background var(--ahp-transition);
+}
+
+.ahp-invoice-view-btn:hover {
+    background: var(--ahp-primary-dark);
+    color: #fff;
+}
+
+.ahp-invoice-card-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ahp-invoice-number {
+    font-weight: 700;
+    color: var(--ahp-text);
+}
+
+.ahp-invoice-status {
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--ahp-bg-soft);
+    color: var(--ahp-text-muted);
+}
+
+.ahp-invoice-status--pending  { background: #fef3c7; color: #92400e; }
+.ahp-invoice-status--approved { background: var(--ahp-primary-light); color: var(--ahp-primary-dark); }
+.ahp-invoice-status--rejected { background: #fee2e2; color: #991b1b; }
+.ahp-invoice-status--expired  { background: var(--ahp-bg-soft); color: var(--ahp-text-muted); }
+
+.ahp-invoice-card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--ahp-text-muted);
+}
+
+/* ── فرم‌های ویرایش اطلاعات ───────────────────────────────────────────── */
+
+.ahp-account-form-title {
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ahp-text);
+}
+
+.ahp-account-form {
+    max-width: 420px;
+}
+
+.ahp-account-field-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.ahp-account-field-row label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ahp-text);
+}
+
+.ahp-account-field-row input {
+    padding: 10px 12px;
+    border: 1px solid var(--ahp-border);
+    border-radius: 10px;
+    font-size: 14.5px;
+    font-family: inherit;
+    background: var(--ahp-bg);
+    color: var(--ahp-text);
+    transition: border-color var(--ahp-transition);
+}
+
+.ahp-account-field-row input:focus {
+    outline: none;
+    border-color: var(--ahp-primary);
+}
+
+.ahp-account-form-msg {
+    min-height: 18px;
+    font-size: 13px;
+    margin: 0 0 12px;
+}
+
+.ahp-account-form-msg.is-error   { color: var(--ahp-accent); }
+.ahp-account-form-msg.is-success { color: var(--ahp-primary-dark); }
+
+.ahp-account-save-btn {
+    background: var(--ahp-primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--ahp-transition);
+}
+
+.ahp-account-save-btn:hover   { background: var(--ahp-primary-dark); }
+.ahp-account-save-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.ahp-account-cancel-btn {
+    background: transparent;
+    color: var(--ahp-text-muted);
+    border: 1px solid var(--ahp-border);
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.ahp-account-divider {
+    border: none;
+    border-top: 1px solid var(--ahp-border);
+    margin: 28px 0;
+}
+
+.ahp-account-mobile-current {
+    font-size: 14px;
+    color: var(--ahp-text-muted);
+    margin: 0 0 16px;
+}
+
+.ahp-account-mobile-code-intro {
+    font-size: 13.5px;
+    color: var(--ahp-text-muted);
+    margin: 0 0 14px;
+}
+
+.ahp-account-mobile-step2-actions {
+    display: flex;
+    gap: 10px;
+}

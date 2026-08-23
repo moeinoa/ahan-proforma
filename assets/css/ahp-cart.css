@@ -1,0 +1,684 @@
+/* Ahan Proforma — استایل ویجت سبد پیش‌فاکتور
+ * ------------------------------------------------------------------------
+ * پالت: سبز-زمردی به‌عنوان رنگ برند (هماهنگ با «آهن‌شهر») + خاکستری‌های نرم.
+ * همه چیز با متغیرهای CSS تا در آینده به‌راحتی قابل تم‌سازی باشد.
+ *
+ * نکتهٔ مهم (فاز ۵): مقادیر رنگی (--ahp-primary, --ahp-primary-dark,
+ * --ahp-primary-light, --ahp-accent, --ahp-contact, --ahp-contact-dark,
+ * --ahp-contact-light) دیگر اینجا هاردکد نیستند. این ۷ متغیر همیشه توسط
+ * AHP_Admin::print_color_overrides() در <head> صفحه چاپ می‌شوند (چه ادمین
+ * مقدار سفارشی تنظیم کرده باشد چه از پیش‌فرض استفاده شود) — پنل «پیش‌فاکتور
+ * آهن‌شهر ▸ تنظیمات» تنها منبع این رنگ‌هاست. مقادیر خنثی/ساختاری
+ * (متن، حاشیه، پس‌زمینه، سایه، شعاع گردی) همچنان همینجا هاردکد می‌مانند
+ * چون بخشی از تنظیمات برند رنگی نیستند، بلکه جزئیات چیدمان‌اند.
+ */
+
+:root {
+    --ahp-text:           #1f2937;
+    --ahp-text-muted:     #6b7280;
+    --ahp-border:         #e5e7eb;
+    --ahp-bg:             #ffffff;
+    --ahp-bg-soft:        #f9fafb;
+    --ahp-radius:         14px;
+    --ahp-shadow-sm:      0 2px 8px rgba(15, 23, 42, .06);
+    --ahp-shadow-lg:      0 20px 60px rgba(15, 23, 42, .18), 0 4px 16px rgba(15, 23, 42, .08);
+    --ahp-transition:     .28s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   صفحهٔ کامل سبد — [ahp_cart]
+   طراحی: هر آیتم یک کارت مستقل (نه جدول سنتی)، فاصله‌گذاری سخاوتمندانه،
+   بدون خط‌کشی زائد. همان الگوی بصری drawer ولی در مقیاس بزرگ‌تر و راحت‌تر.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ahp-cart-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+}
+
+.ahp-cart-title {
+    margin: 0 0 20px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ahp-text);
+}
+
+.ahp-cart-loading {
+    text-align: center;
+    color: var(--ahp-text-muted);
+    padding: 48px 0;
+}
+
+.ahp-cart-empty {
+    text-align: center;
+    color: var(--ahp-text-muted);
+    padding: 64px 16px;
+    font-size: 14.5px;
+    background: var(--ahp-bg-soft);
+    border-radius: var(--ahp-radius);
+}
+
+/* جدول به‌صورت لیستی از کارت‌ها رندر می‌شود؛ خود <table> فقط برای معنایی
+   بودن نگه داشته شده، اما بصری کاملاً به‌شکل کارت است. */
+.ahp-cart-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    font-size: 14px;
+}
+
+.ahp-cart-table thead {
+    display: none; /* عناوین ستون در طراحی کارتی نیازی نیست، هر مقدار کنار برچسبش می‌آید */
+}
+
+.ahp-cart-table tbody tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+        "remove desc     qty"
+        "remove meta     total";
+    align-items: center;
+    column-gap: 14px;
+    row-gap: 6px;
+    padding: 16px 18px;
+    background: var(--ahp-bg);
+    border: 1px solid var(--ahp-border);
+    border-radius: var(--ahp-radius);
+    box-shadow: var(--ahp-shadow-sm);
+    transition: box-shadow var(--ahp-transition), transform var(--ahp-transition);
+}
+
+.ahp-cart-table tbody tr:hover {
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .1);
+    transform: translateY(-1px);
+}
+
+.ahp-cart-table td {
+    padding: 0;
+    border: none;
+    text-align: start;
+}
+
+.ahp-cart-table td:nth-child(1) { grid-area: remove; }
+.ahp-cart-table td:nth-child(2) { grid-area: desc; font-weight: 700; color: var(--ahp-text); font-size: 14.5px; }
+.ahp-cart-table td:nth-child(3) { grid-area: meta; color: var(--ahp-text-muted); font-size: 12.5px; }
+.ahp-cart-table td:nth-child(4) { grid-area: qty; justify-self: end; }
+.ahp-cart-table td:nth-child(5) { display: none; } /* قیمت واحد در کارت جدا نمایش داده نمی‌شود؛ فقط جمع سطر */
+.ahp-cart-table td:nth-child(6) { grid-area: total; justify-self: end; font-weight: 800; color: var(--ahp-primary-dark); font-size: 14.5px; }
+
+.ahp-cart-code {
+    color: var(--ahp-text-muted);
+    font-size: 12.5px;
+    font-weight: 400;
+}
+
+.ahp-qty-stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ahp-cart-qty {
+    width: 40px;
+    text-align: center;
+    padding: 7px 2px;
+    border: 1px solid var(--ahp-border);
+    border-radius: 8px;
+    font-size: 13.5px;
+    background: var(--ahp-bg-soft);
+    transition: border-color var(--ahp-transition), box-shadow var(--ahp-transition);
+    -moz-appearance: textfield;
+}
+
+.ahp-cart-qty::-webkit-outer-spin-button,
+.ahp-cart-qty::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ahp-cart-qty:focus {
+    outline: none;
+    border-color: var(--ahp-primary);
+    box-shadow: 0 0 0 3px var(--ahp-primary-light);
+    background: var(--ahp-bg);
+}
+
+.ahp-qty-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    border: 1px solid var(--ahp-border);
+    border-radius: 7px;
+    background: var(--ahp-bg-soft);
+    color: var(--ahp-text);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background var(--ahp-transition), border-color var(--ahp-transition), transform var(--ahp-transition);
+}
+
+.ahp-qty-btn:hover {
+    background: var(--ahp-primary-light);
+    border-color: var(--ahp-primary);
+    color: var(--ahp-primary-dark);
+}
+
+.ahp-qty-btn:active {
+    transform: scale(.92);
+}
+
+.ahp-qty-btn:disabled,
+.ahp-cart-qty:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* حالت لودینگ سطر هنگام تغییر تعداد (چه در صفحه سبد، چه در drawer) */
+.ahp-cart-table tbody tr.ahp-row-loading {
+    opacity: .55;
+    pointer-events: none;
+    transition: opacity .15s ease;
+}
+
+.ahp-qty-stepper {
+    position: relative;
+}
+
+.ahp-row-loading .ahp-qty-stepper::before {
+    content: "";
+    position: absolute;
+    inset-inline-end: 45px;
+    top: 45%;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    border-radius: 50%;
+    border: 2px solid var(--ahp-border);
+    border-top-color: var(--ahp-primary);
+    animation: ahp-spin .6s linear infinite;
+}
+
+@keyframes ahp-spin {
+    to { transform: rotate(360deg); }
+}
+
+.ahp-cart-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 9px;
+    background: rgba(208, 52, 44, .08);
+    color: var(--ahp-accent);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background var(--ahp-transition), transform var(--ahp-transition);
+}
+
+.ahp-cart-remove:hover {
+    background: rgba(208, 52, 44, .16);
+    transform: scale(1.06);
+}
+
+.ahp-cart-table tbody tr.ahp-row-flash {
+    animation: ahp-row-flash 1.1s ease;
+}
+
+.ahp-cart-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 20px;
+    padding: 18px 22px;
+    background: var(--ahp-bg-soft);
+    border-radius: var(--ahp-radius);
+}
+
+.ahp-cart-total {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-weight: 400;
+}
+
+.ahp-cart-total-label {
+    font-size: 12.5px;
+    color: var(--ahp-text-muted);
+}
+
+.ahp-cart-total::before {
+    content: "";
+}
+
+.ahp-cart-total span[data-ahp-cart-total] {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ahp-primary-dark);
+}
+
+.ahp-checkout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--ahp-primary), var(--ahp-primary-dark));
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14.5px;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(15, 157, 88, .28);
+    transition: transform var(--ahp-transition), box-shadow var(--ahp-transition);
+}
+
+.ahp-checkout-btn:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(15, 157, 88, .36);
+}
+
+.ahp-checkout-btn:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.ahp-cart-issue-msg {
+    margin: 10px 0 0;
+    font-size: 13px;
+    text-align: center;
+    color: var(--ahp-text-muted);
+    min-height: 16px;
+}
+
+.ahp-cart-issue-msg.is-error {
+    color: var(--ahp-accent);
+}
+
+@media ( max-width: 560px ) {
+    .ahp-cart-table tbody tr {
+        grid-template-columns: auto 1fr;
+        grid-template-areas:
+            "remove desc"
+            "remove meta"
+            "qty    total";
+    }
+/*     .ahp-cart-table td:nth-child(4) { justify-self: start; } */
+    .ahp-cart-footer { flex-direction: column; align-items: stretch; text-align: center; }
+    .ahp-checkout-btn { width: 100%; }
+}
+
+.ahp-cart-count {
+    display: inline-block;
+    min-width: 18px;
+    padding: 0 4px;
+    border-radius: 9px;
+    background-color: var(--ahp-accent);
+    color: #fff;
+    font-size: 11px;
+    text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   آیکون شناور سبد — [ahp_cart_icon]
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ahp-cart-icon-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 12px;
+    background: var(--ahp-primary-light);
+    color: var(--ahp-primary-dark);
+    cursor: pointer;
+    transition: transform var(--ahp-transition), background var(--ahp-transition), box-shadow var(--ahp-transition);
+}
+
+.ahp-cart-icon-btn:hover {
+    background: var(--ahp-primary);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(15, 157, 88, .3);
+    transform: translateY(-1px);
+}
+
+.ahp-cart-icon-btn:active {
+    transform: translateY(0) scale(.96);
+}
+
+.ahp-cart-icon-svg {
+    display: inline-flex;
+    line-height: 0;
+}
+
+.ahp-cart-icon-badge {
+    position: absolute;
+    top: -6px;
+    inset-inline-end: -6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--ahp-accent), #ef4444);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(208, 52, 44, .45), 0 0 0 2px var(--ahp-bg);
+    transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.ahp-cart-icon-badge:empty,
+.ahp-cart-icon-badge[data-ahp-cart-count="0"] {
+    display: none;
+}
+
+/* پالس هنگام افزودن آیتم جدید */
+.ahp-cart-icon-badge.ahp-pulse {
+    animation: ahp-badge-pulse .55s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+@keyframes ahp-badge-pulse {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.55); }
+    60%  { transform: scale(.9); }
+    100% { transform: scale(1); }
+}
+
+.ahp-cart-icon-btn.ahp-shake {
+    animation: ahp-icon-shake .5s ease;
+}
+
+@keyframes ahp-icon-shake {
+    0%, 100% { transform: rotate(0); }
+    20%      { transform: rotate(-10deg); }
+    40%      { transform: rotate(8deg); }
+    60%      { transform: rotate(-6deg); }
+    80%      { transform: rotate(4deg); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Drawer کشویی سبد
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ahp-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .45);
+    backdrop-filter: blur(2px);
+    z-index: 2147483630;
+    opacity: 0;
+    transition: opacity var(--ahp-transition);
+}
+
+.ahp-drawer-overlay.ahp-visible {
+    opacity: 1;
+}
+
+.ahp-drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 0;
+    width: min(420px, 85vw);
+    background: var(--ahp-bg);
+    z-index: 2147483630;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--ahp-shadow-lg);
+    transform: translateX(100%);
+    transition: transform .38s cubic-bezier(.32, .72, 0, 1);
+}
+
+html[dir="rtl"] .ahp-drawer {
+    transform: translateX(100%);
+}
+
+.ahp-drawer.ahp-open {
+    transform: translateX(0) !important;
+}
+
+.ahp-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--ahp-border);
+    background: linear-gradient(180deg, var(--ahp-primary-light), transparent);
+}
+
+.ahp-drawer-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ahp-text);
+}
+
+.ahp-drawer-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(15, 23, 42, .06);
+    color: var(--ahp-text-muted);
+    cursor: pointer;
+    transition: background var(--ahp-transition), color var(--ahp-transition), transform var(--ahp-transition);
+}
+
+.ahp-drawer-close:hover {
+    background: rgba(208, 52, 44, .1);
+    color: var(--ahp-accent);
+    transform: rotate(90deg);
+}
+
+.ahp-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 22px;
+}
+
+.ahp-drawer-body .ahp-cart-loading {
+    color: var(--ahp-text-muted);
+    text-align: center;
+    padding: 40px 0;
+}
+
+.ahp-drawer-body .ahp-cart-empty {
+    text-align: center;
+    color: var(--ahp-text-muted);
+    padding: 48px 12px;
+    font-size: 14px;
+}
+
+.ahp-drawer-footer {
+    padding: 18px 22px 22px;
+    border-top: 1px solid var(--ahp-border);
+    background: var(--ahp-bg-soft);
+}
+
+.ahp-cart-total-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.ahp-cart-total-label {
+    font-size: 13px;
+    color: var(--ahp-text-muted);
+}
+
+.ahp-cart-total-value {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--ahp-primary-dark);
+}
+
+.ahp-drawer-footer-actions {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.ahp-drawer-footer .ahp-checkout-btn {
+    display: block;
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--ahp-primary), var(--ahp-primary-dark));
+    box-shadow: 0 8px 20px rgba(15, 157, 88, .3);
+    font-weight: 700;
+    letter-spacing: .2px;
+    transition: transform var(--ahp-transition), box-shadow var(--ahp-transition);
+}
+
+.ahp-drawer-footer .ahp-checkout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(15, 157, 88, .38);
+    color: #fff;
+}
+
+.ahp-view-cart-btn {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 13px 16px;
+    border-radius: 10px;
+    background: var(--ahp-bg);
+    border: 1px solid var(--ahp-border);
+    color: var(--ahp-text);
+    font-weight: 700;
+    font-size: 13.5px;
+    letter-spacing: .2px;
+    text-decoration: none;
+    transition: transform var(--ahp-transition), box-shadow var(--ahp-transition), background var(--ahp-transition);
+	white-space: nowrap;
+}
+
+.ahp-view-cart-btn:hover {
+    color: var(--ahp-primary-dark);
+    background: var(--ahp-primary-light);
+    border-color: var(--ahp-primary);
+    transform: translateY(-2px);
+}
+
+@media ( max-width: 380px ) {
+    .ahp-drawer-footer-actions {
+        flex-direction: column;
+    }
+}
+
+/* جدول آیتم‌های داخل drawer — نسخهٔ فشرده‌تر و شیک‌تر از جدول عمومی سبد */
+.ahp-drawer .ahp-cart-table {
+    font-size: 13px;
+}
+
+.ahp-drawer .ahp-cart-table thead {
+    display: none; /* در drawer باریک، هدر جدول جای زیادی می‌گیرد؛ کارت‌مانند نمایش می‌دهیم */
+}
+
+.ahp-drawer .ahp-cart-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "desc remove"
+        "meta meta"
+        "controls controls";
+    gap: 4px 8px;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--ahp-border);
+    transition: background var(--ahp-transition);
+}
+
+.ahp-drawer .ahp-cart-table tbody tr:hover {
+    background: var(--ahp-bg-soft);
+}
+
+.ahp-drawer .ahp-cart-table td {
+    border: none;
+    padding: 2px 4px;
+    text-align: start;
+}
+
+.ahp-drawer .ahp-cart-table td:first-child { grid-area: remove; }
+.ahp-drawer .ahp-cart-table td:nth-child(2) { grid-area: desc; font-weight: 600; color: var(--ahp-text); }
+.ahp-drawer .ahp-cart-table td:nth-child(3),
+.ahp-drawer .ahp-cart-table td:nth-child(4) { grid-area: controls; display: inline-flex; align-items: center; gap: 6px; }
+.ahp-drawer .ahp-cart-table td:nth-child(5),
+.ahp-drawer .ahp-cart-table td:nth-child(6) { grid-area: meta; color: var(--ahp-text-muted); font-size: 12px; }
+
+.ahp-drawer .ahp-cart-remove {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: rgba(208, 52, 44, .08);
+    transition: background var(--ahp-transition), transform var(--ahp-transition);
+}
+
+.ahp-drawer .ahp-cart-remove:hover {
+    background: rgba(208, 52, 44, .16);
+    transform: scale(1.08);
+}
+
+.ahp-drawer .ahp-cart-qty {
+    border: 1px solid var(--ahp-border);
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.ahp-drawer .ahp-cart-qty:focus {
+    outline: none;
+    border-color: var(--ahp-primary);
+    box-shadow: 0 0 0 3px var(--ahp-primary-light);
+}
+
+/* برجسته‌سازی موقت ردیف تازه‌افزوده‌شده در drawer */
+.ahp-drawer .ahp-cart-table tbody tr.ahp-row-flash {
+    animation: ahp-row-flash 1.1s ease;
+}
+
+@keyframes ahp-row-flash {
+    0%   { background: var(--ahp-primary-light); }
+    100% { background: transparent; }
+}
+
+/* اسکرول‌بار ظریف داخل drawer */
+.ahp-drawer-body::-webkit-scrollbar { width: 6px; }
+.ahp-drawer-body::-webkit-scrollbar-thumb { background: var(--ahp-border); border-radius: 999px; }
+
+@media ( max-width: 480px ) {
+    .ahp-drawer { width: 85vw; }
+}
+
+/* حرکت افزوده شدن دکمهٔ روی جدول (فاز ۱-ب) — لحظهٔ کلیک موفق */
+.ahp-add-btn.ahp-added {
+    background: var(--ahp-primary) !important;
+    color: #fff !important;
+    border-color: var(--ahp-primary) !important;
+}
