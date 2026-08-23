@@ -48,6 +48,26 @@ require_once AHP_PLUGIN_DIR . 'includes/class-ahp-admin.php';             // Pha
  * Files for later phases (commented out until each phase is built and added):
  */
 
+/* ── Auto-update via GitHub Releases ───────────────────────────────────── */
+// Uses the Plugin Update Checker library (bundled in /plugin-update-checker).
+// Whenever a new "Release" is published on the GitHub repo below, WordPress
+// will show an "Update available" notice for this plugin, same as any
+// plugin from wordpress.org.
+
+require_once AHP_PLUGIN_DIR . 'plugin-update-checker/plugin-update-checker.php';
+
+use YahnisElsts\PluginUpdateChecker\v5p7\PucFactory;
+
+$ahpUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://github.com/moeinoa/ahan-proforma/', // GitHub repo URL
+    __FILE__,
+    'ahan-proforma'
+);
+
+// Tell it to look at GitHub "Releases" (tagged versions) rather than
+// just the latest commit on the branch.
+$ahpUpdateChecker->getVcsApi()->enableReleaseAssets();
+
 /* ── Install/upgrade ───────────────────────────────────────────────────── */
 
 register_activation_hook( __FILE__, function () {
