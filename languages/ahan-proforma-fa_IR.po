@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ahan Proforma 0.9.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"POT-Creation-Date: 2026-08-23 10:40+0000\n"
 "PO-Revision-Date: 2026-08-23 00:00+0000\n"
 "Last-Translator: Ahan Shahr\n"
 "Language-Team: Persian\n"
@@ -15,26 +15,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ahan-proforma\n"
 
-#: ahan-proforma.php:104
+#: ahan-proforma.php:105
 msgid ""
 "The \"Ahan Price Tables\" plugin was not found or is inactive. The proforma "
 "plugin still works without it, but the \"Add to invoice\" button will not "
 "appear on price tables."
 msgstr ""
-"افزونهٔ «Ahan Price Tables» یافت نشد یا غیرفعال است. افزونهٔ پیش‌فاکتور بدون"
-" آن کار می‌کند اما دکمهٔ «افزودن به پیش‌فاکتور» روی جداول قیمت نمایش داده "
-"نمی‌شود."
+"افزونهٔ «Ahan Price Tables» یافت نشد یا غیرفعال است. افزونهٔ پیش‌فاکتور بدون آن "
+"کار می‌کند اما دکمهٔ «افزودن به پیش‌فاکتور» روی جداول قیمت نمایش داده نمی‌شود."
 
-#: ahan-proforma.php:122
+#: ahan-proforma.php:123
 #, php-format
 msgid ""
-"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
-" not work. Go to %s to set it up."
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will "
+"not work. Go to %s to set it up."
 msgstr ""
 "تنظیمات وب‌سرویس پیامکی (فراپیامک) هنوز پیکربندی نشده؛ ورود مشتریان با کد "
 "پیامکی کار نخواهد کرد. برای تنظیم به %s بروید."
 
-#: ahan-proforma.php:123
+#: ahan-proforma.php:124
 msgid "Ahan Proforma ▸ Settings"
 msgstr "پیش‌فاکتور آهن‌شهر ▸ تنظیمات"
 
@@ -44,10 +43,10 @@ msgstr "تنظیمات پیش‌فاکتور آهن‌شهر"
 
 #: templates/admin-settings.php:15
 msgid ""
-"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
-" in wp-config.php and currently takes priority over the values on this page."
-" To manage everything from this panel, remove those constants from wp-"
-"config.php."
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined "
+"in wp-config.php and currently takes priority over the values on this page. "
+"To manage everything from this panel, remove those constants from wp-config."
+"php."
 msgstr ""
 "یک یا چند ثابت AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM در wp-"
 "config.php تعریف شده و در حال حاضر بر مقادیر این صفحه اولویت دارد. برای "
@@ -63,9 +62,9 @@ msgid ""
 "account page, proforma-invoice document) are read from these fields. If a "
 "field is left empty, the plugin's default color is used."
 msgstr ""
-"تمام رنگ‌های افزونه (دکمه‌های جدول قیمت، سبد پیش‌فاکتور، فرم ورود، حساب "
-"کاربری، سند پیش‌فاکتور) از همین فیلدها خوانده می‌شوند. در صورت خالی گذاشتن "
-"هر فیلد، رنگ پیش‌فرض افزونه استفاده می‌شود."
+"تمام رنگ‌های افزونه (دکمه‌های جدول قیمت، سبد پیش‌فاکتور، فرم ورود، حساب کاربری، "
+"سند پیش‌فاکتور) از همین فیلدها خوانده می‌شوند. در صورت خالی گذاشتن هر فیلد، "
+"رنگ پیش‌فرض افزونه استفاده می‌شود."
 
 #: templates/admin-settings.php:27
 msgid "Primary color"
@@ -121,9 +120,9 @@ msgid ""
 "number(s) below. For multiple numbers, separate them with a comma (,). If "
 "left empty, this SMS is not sent."
 msgstr ""
-"با ثبت هر پیش‌فاکتور جدید، یک پیامک متنی به شماره(های) زیر ارسال می‌شود. "
-"برای چند شماره، آن‌ها را با کاما (,) از هم جدا کنید. اگر خالی بماند، این "
-"پیامک ارسال نمی‌شود."
+"با ثبت هر پیش‌فاکتور جدید، یک پیامک متنی به شماره(های) زیر ارسال می‌شود. برای "
+"چند شماره، آن‌ها را با کاما (,) از هم جدا کنید. اگر خالی بماند، این پیامک "
+"ارسال نمی‌شود."
 
 #: templates/admin-settings.php:76
 msgid "Admin mobile number(s)"
@@ -134,22 +133,32 @@ msgid "Proforma invoice content"
 msgstr "محتوای پیش‌فاکتور"
 
 #: templates/admin-settings.php:84
+msgid "Notice text under the print button"
+msgstr "متن هشدار زیر دکمهٔ چاپ"
+
+#: templates/admin-settings.php:87
+msgid ""
+"Plain text only (no HTML). Shown next to a warning icon, right below the "
+"print button."
+msgstr "فقط متن ساده (بدون HTML). کنار آیکن هشدار، درست زیر دکمهٔ چاپ نمایش داده می‌شود."
+
+#: templates/admin-settings.php:91
 msgid "Text at the bottom of the proforma-invoice document"
 msgstr "متن پایین سند پیش‌فاکتور"
 
-#: templates/admin-settings.php:104
+#: templates/admin-settings.php:111
 msgid "Tax"
 msgstr "مالیات"
 
-#: templates/admin-settings.php:107
+#: templates/admin-settings.php:114
 msgid "VAT rate (%)"
 msgstr "نرخ مالیات بر ارزش افزوده (٪)"
 
-#: templates/admin-settings.php:110
+#: templates/admin-settings.php:117
 msgid "For example, enter 10 for 10%."
 msgstr "مثلاً برای ۱۰٪ عدد ۱۰ را وارد کنید."
 
-#: templates/admin-settings.php:115
+#: templates/admin-settings.php:122
 msgid "Save settings"
 msgstr "ذخیرهٔ تنظیمات"
 
@@ -195,8 +204,8 @@ msgstr "پیش‌فاکتورهای من"
 
 #: templates/account-tab-invoices.php:20
 msgid ""
-"No proforma invoices have been issued for you yet. Any proforma invoices you"
-" issue will show up here."
+"No proforma invoices have been issued for you yet. Any proforma invoices you "
+"issue will show up here."
 msgstr ""
 "هنوز هیچ پیش‌فاکتوری برای شما صادر نشده است. پیش‌فاکتورهایی که صادر می‌کنید "
 "اینجا نمایش داده می‌شوند."
@@ -259,9 +268,9 @@ msgid ""
 "recomputed after any row change; editing is always possible regardless of "
 "the proforma invoice's status."
 msgstr ""
-"برای مشاهده و ویرایش اقلام هر پیش‌فاکتور (شرح، واحد، تعداد، قیمت)، روی "
-"شمارهٔ آن کلیک کنید. جمع کل سند بعد از هر تغییر ردیف خودکار بازمحاسبه "
-"می‌شود؛ ویرایش صرف‌نظر از وضعیت پیش‌فاکتور همیشه ممکن است."
+"برای مشاهده و ویرایش اقلام هر پیش‌فاکتور (شرح، واحد، تعداد، قیمت)، روی شمارهٔ "
+"آن کلیک کنید. جمع کل سند بعد از هر تغییر ردیف خودکار بازمحاسبه می‌شود؛ ویرایش "
+"صرف‌نظر از وضعیت پیش‌فاکتور همیشه ممکن است."
 
 #: templates/admin-invoices-list.php:57
 msgid "Proforma invoice number"
@@ -410,8 +419,7 @@ msgid ""
 "Your number isn't registered on the site yet; enter your name to create an "
 "account."
 msgstr ""
-"شمارهٔ شما هنوز در سایت ثبت نشده؛ برای ساخت حساب کاربری نام خود را وارد "
-"کنید."
+"شمارهٔ شما هنوز در سایت ثبت نشده؛ برای ساخت حساب کاربری نام خود را وارد کنید."
 
 #: templates/auth-form.php:48 includes/class-ahp-auth.php:397
 msgid "Continue"
@@ -439,65 +447,65 @@ msgstr "ارسال مجدد کد"
 msgid "Logged in successfully."
 msgstr "ورود با موفقیت انجام شد."
 
-#: templates/invoice-output.php:189
+#: templates/invoice-output.php:212
 msgid "چاپ / ذخیرهٔ PDF"
 msgstr "چاپ / ذخیرهٔ PDF"
 
-#: templates/invoice-output.php:195
+#: templates/invoice-output.php:228
 msgid "پیش‌فاکتور فروش"
 msgstr "پیش‌فاکتور فروش"
 
-#: templates/invoice-output.php:206
+#: templates/invoice-output.php:239
 msgid "خریدار"
 msgstr "خریدار"
 
-#: templates/invoice-output.php:211
+#: templates/invoice-output.php:244
 msgid "فروشنده"
 msgstr "فروشنده"
 
-#: templates/invoice-output.php:220
+#: templates/invoice-output.php:253
 msgid "شرح کالا"
 msgstr "شرح کالا"
 
-#: templates/invoice-output.php:221
+#: templates/invoice-output.php:254
 msgid "واحد"
 msgstr "واحد"
 
-#: templates/invoice-output.php:222
+#: templates/invoice-output.php:255
 msgid "تعداد"
 msgstr "تعداد"
 
-#: templates/invoice-output.php:223
+#: templates/invoice-output.php:256
 msgid "قیمت واحد (تومان)"
 msgstr "قیمت واحد (تومان)"
 
-#: templates/invoice-output.php:224
+#: templates/invoice-output.php:257
 msgid "مبلغ کل (تومان)"
 msgstr "مبلغ کل (تومان)"
 
-#: templates/invoice-output.php:237
+#: templates/invoice-output.php:270
 msgid "کیلوگرم"
 msgstr "کیلوگرم"
 
-#: templates/invoice-output.php:237
+#: templates/invoice-output.php:270
 msgid "شاخه"
 msgstr "شاخه"
 
-#: templates/invoice-output.php:249
+#: templates/invoice-output.php:282
 msgid "جمع جزء"
 msgstr "جمع جزء"
 
-#: templates/invoice-output.php:250 templates/invoice-output.php:258
-#: templates/invoice-output.php:262
+#: templates/invoice-output.php:283 templates/invoice-output.php:291
+#: templates/invoice-output.php:295
 msgid "تومان"
 msgstr "تومان"
 
-#: templates/invoice-output.php:255
+#: templates/invoice-output.php:288
 #, php-format
 msgid "مالیات بر ارزش افزوده (%s٪)"
 msgstr "مالیات بر ارزش افزوده (%s٪)"
 
-#: templates/invoice-output.php:261
+#: templates/invoice-output.php:294
 msgid "مبلغ نهایی"
 msgstr "مبلغ نهایی"
 
@@ -509,22 +517,21 @@ msgstr "اطلاعات مشتری آهن‌شهر"
 msgid ""
 "This number is used for SMS-code login and cannot be changed from this page."
 msgstr ""
-"این شماره برای ورود با کد پیامکی استفاده می‌شود و از این صفحه قابل تغییر "
-"نیست."
+"این شماره برای ورود با کد پیامکی استفاده می‌شود و از این صفحه قابل تغییر نیست."
 
-#: includes/class-ahp-helpers.php:111 includes/class-ahp-admin.php:174
+#: includes/class-ahp-helpers.php:111 includes/class-ahp-admin.php:178
 msgid "Pending review"
 msgstr "در انتظار بررسی"
 
-#: includes/class-ahp-helpers.php:112 includes/class-ahp-admin.php:175
+#: includes/class-ahp-helpers.php:112 includes/class-ahp-admin.php:179
 msgid "Approved"
 msgstr "تایید شده"
 
-#: includes/class-ahp-helpers.php:113 includes/class-ahp-admin.php:176
+#: includes/class-ahp-helpers.php:113 includes/class-ahp-admin.php:180
 msgid "Rejected"
 msgstr "رد شده"
 
-#: includes/class-ahp-helpers.php:114 includes/class-ahp-admin.php:177
+#: includes/class-ahp-helpers.php:114 includes/class-ahp-admin.php:181
 msgid "Expired"
 msgstr "منقضی شده"
 
@@ -549,7 +556,7 @@ msgstr "پیش‌فاکتور جدید صادر شد: %1$s - خریدار: %2$s"
 msgid "You are not allowed to view this proforma invoice."
 msgstr "شما اجازهٔ مشاهدهٔ این پیش‌فاکتور را ندارید."
 
-#: includes/class-ahp-invoice.php:210 includes/class-ahp-admin.php:138
+#: includes/class-ahp-invoice.php:210 includes/class-ahp-admin.php:142
 msgid "Access not allowed"
 msgstr "دسترسی مجاز نیست"
 
@@ -646,8 +653,7 @@ msgstr "به پیش‌فاکتور افزوده شد"
 msgid "Error; please try again"
 msgstr "خطا؛ لطفاً دوباره تلاش کنید"
 
-#: includes/class-ahp-cart.php:417
-#: includes/class-ahp-table-integration.php:133
+#: includes/class-ahp-cart.php:417 includes/class-ahp-table-integration.php:133
 #: includes/class-ahp-table-integration.php:146
 msgid "Add to invoice"
 msgstr "افزودن به پیش‌فاکتور"
@@ -684,40 +690,45 @@ msgstr "قیمت واحد"
 msgid "Total"
 msgstr "جمع"
 
-#: includes/class-ahp-admin.php:106 includes/class-ahp-admin.php:107
+#: includes/class-ahp-admin.php:110 includes/class-ahp-admin.php:111
 msgid "Ahan Shahr Proforma"
 msgstr "پیش‌فاکتور آهن‌شهر"
 
-#: includes/class-ahp-admin.php:117
+#: includes/class-ahp-admin.php:121
 msgid "Proforma Invoices"
 msgstr "پیش‌فاکتورها"
 
-#: includes/class-ahp-admin.php:118
+#: includes/class-ahp-admin.php:122
 msgid "Invoices"
 msgstr "پیش‌فاکتورها"
 
-#: includes/class-ahp-admin.php:126
+#: includes/class-ahp-admin.php:130
 msgid "Proforma Settings"
 msgstr "تنظیمات پیش‌فاکتور"
 
-#: includes/class-ahp-admin.php:127
+#: includes/class-ahp-admin.php:131
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/class-ahp-admin.php:137
+#: includes/class-ahp-admin.php:141
 msgid "You are not allowed to access this page."
 msgstr "شما اجازهٔ دسترسی به این صفحه را ندارید."
 
-#: includes/class-ahp-admin.php:173
+#: includes/class-ahp-admin.php:177
 msgid "All"
 msgstr "همه"
 
-#: includes/class-ahp-admin.php:394
+#: includes/class-ahp-admin.php:403
 msgid ""
 "This is a proforma document and is not an official sales invoice until "
 "finally approved."
 msgstr ""
 "این سند یک پیش‌فاکتور است و تا تایید نهایی، فاکتور فروش رسمی محسوب نمی‌شود."
+
+#: includes/class-ahp-admin.php:412
+msgid ""
+"Please review all information carefully before printing or saving as PDF."
+msgstr "لطفاً پیش از چاپ یا ذخیرهٔ PDF، تمام اطلاعات را با دقت بررسی کنید."
 
 #: includes/class-ahp-auth.php:101 includes/class-ahp-auth.php:272
 msgid "You have made too many requests; please try again shortly."
@@ -790,18 +801,18 @@ msgstr "ضخامت: %s"
 msgid "Call us"
 msgstr "تماس بگیرید"
 
-#. Plugin header field, read by WordPress's get_plugin_data()
+#. Plugin Name of the plugin
 msgid "Ahan Proforma"
 msgstr "پیش‌فاکتور آهن‌شهر"
 
-#. Plugin header field, read by WordPress's get_plugin_data()
+#. Description of the plugin
 msgid ""
-"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
-" without requiring WooCommerce."
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices, "
+"without requiring WooCommerce."
 msgstr ""
 "ردیف‌های جداول قیمت (افزونهٔ Ahan Price Tables) را بدون نیاز به ووکامرس به "
 "پیش‌فاکتور تبدیل می‌کند."
 
-#. Plugin header field (Author), read by WordPress's get_plugin_data()
+#. Author of the plugin
 msgid "Moein Akbari"
 msgstr "Moein Akbari"

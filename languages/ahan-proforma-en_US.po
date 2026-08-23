@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ahan Proforma 0.9.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"POT-Creation-Date: 2026-08-23 10:40+0000\n"
 "PO-Revision-Date: 2026-08-23 00:00+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ahan-proforma\n"
 
-#: ahan-proforma.php:104
+#: ahan-proforma.php:105
 msgid ""
 "The \"Ahan Price Tables\" plugin was not found or is inactive. The proforma "
 "plugin still works without it, but the \"Add to invoice\" button will not "
@@ -24,17 +24,17 @@ msgstr ""
 "The \"Ahan Price Tables\" plugin was not found or is inactive. The proforma "
 "plugin still works without it, but the \"Add to invoice\" button will not "
 "appear on price tables."
-
-#: ahan-proforma.php:122
-#, php-format
-msgid ""
-"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
-" not work. Go to %s to set it up."
-msgstr ""
-"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
-" not work. Go to %s to set it up."
 
 #: ahan-proforma.php:123
+#, php-format
+msgid ""
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will "
+"not work. Go to %s to set it up."
+msgstr ""
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will "
+"not work. Go to %s to set it up."
+
+#: ahan-proforma.php:124
 msgid "Ahan Proforma ▸ Settings"
 msgstr "Ahan Proforma ▸ Settings"
 
@@ -44,15 +44,15 @@ msgstr "Ahan Shahr Proforma Settings"
 
 #: templates/admin-settings.php:15
 msgid ""
-"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
-" in wp-config.php and currently takes priority over the values on this page."
-" To manage everything from this panel, remove those constants from wp-"
-"config.php."
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined "
+"in wp-config.php and currently takes priority over the values on this page. "
+"To manage everything from this panel, remove those constants from wp-config."
+"php."
 msgstr ""
-"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
-" in wp-config.php and currently takes priority over the values on this page."
-" To manage everything from this panel, remove those constants from wp-"
-"config.php."
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined "
+"in wp-config.php and currently takes priority over the values on this page. "
+"To manage everything from this panel, remove those constants from wp-config."
+"php."
 
 #: templates/admin-settings.php:23
 msgid "Color and style"
@@ -135,22 +135,34 @@ msgid "Proforma invoice content"
 msgstr "Proforma invoice content"
 
 #: templates/admin-settings.php:84
+msgid "Notice text under the print button"
+msgstr "Notice text under the print button"
+
+#: templates/admin-settings.php:87
+msgid ""
+"Plain text only (no HTML). Shown next to a warning icon, right below the "
+"print button."
+msgstr ""
+"Plain text only (no HTML). Shown next to a warning icon, right below the "
+"print button."
+
+#: templates/admin-settings.php:91
 msgid "Text at the bottom of the proforma-invoice document"
 msgstr "Text at the bottom of the proforma-invoice document"
 
-#: templates/admin-settings.php:104
+#: templates/admin-settings.php:111
 msgid "Tax"
 msgstr "Tax"
 
-#: templates/admin-settings.php:107
+#: templates/admin-settings.php:114
 msgid "VAT rate (%)"
 msgstr "VAT rate (%)"
 
-#: templates/admin-settings.php:110
+#: templates/admin-settings.php:117
 msgid "For example, enter 10 for 10%."
 msgstr "For example, enter 10 for 10%."
 
-#: templates/admin-settings.php:115
+#: templates/admin-settings.php:122
 msgid "Save settings"
 msgstr "Save settings"
 
@@ -196,11 +208,11 @@ msgstr "My proforma invoices"
 
 #: templates/account-tab-invoices.php:20
 msgid ""
-"No proforma invoices have been issued for you yet. Any proforma invoices you"
-" issue will show up here."
+"No proforma invoices have been issued for you yet. Any proforma invoices you "
+"issue will show up here."
 msgstr ""
-"No proforma invoices have been issued for you yet. Any proforma invoices you"
-" issue will show up here."
+"No proforma invoices have been issued for you yet. Any proforma invoices you "
+"issue will show up here."
 
 #: templates/account-tab-invoices.php:39
 msgid "View"
@@ -443,65 +455,65 @@ msgstr "Resend code"
 msgid "Logged in successfully."
 msgstr "Logged in successfully."
 
-#: templates/invoice-output.php:189
+#: templates/invoice-output.php:212
 msgid "چاپ / ذخیرهٔ PDF"
 msgstr "چاپ / ذخیرهٔ PDF"
 
-#: templates/invoice-output.php:195
+#: templates/invoice-output.php:228
 msgid "پیش‌فاکتور فروش"
 msgstr "پیش‌فاکتور فروش"
 
-#: templates/invoice-output.php:206
+#: templates/invoice-output.php:239
 msgid "خریدار"
 msgstr "خریدار"
 
-#: templates/invoice-output.php:211
+#: templates/invoice-output.php:244
 msgid "فروشنده"
 msgstr "فروشنده"
 
-#: templates/invoice-output.php:220
+#: templates/invoice-output.php:253
 msgid "شرح کالا"
 msgstr "شرح کالا"
 
-#: templates/invoice-output.php:221
+#: templates/invoice-output.php:254
 msgid "واحد"
 msgstr "واحد"
 
-#: templates/invoice-output.php:222
+#: templates/invoice-output.php:255
 msgid "تعداد"
 msgstr "تعداد"
 
-#: templates/invoice-output.php:223
+#: templates/invoice-output.php:256
 msgid "قیمت واحد (تومان)"
 msgstr "قیمت واحد (تومان)"
 
-#: templates/invoice-output.php:224
+#: templates/invoice-output.php:257
 msgid "مبلغ کل (تومان)"
 msgstr "مبلغ کل (تومان)"
 
-#: templates/invoice-output.php:237
+#: templates/invoice-output.php:270
 msgid "کیلوگرم"
 msgstr "کیلوگرم"
 
-#: templates/invoice-output.php:237
+#: templates/invoice-output.php:270
 msgid "شاخه"
 msgstr "شاخه"
 
-#: templates/invoice-output.php:249
+#: templates/invoice-output.php:282
 msgid "جمع جزء"
 msgstr "جمع جزء"
 
-#: templates/invoice-output.php:250 templates/invoice-output.php:258
-#: templates/invoice-output.php:262
+#: templates/invoice-output.php:283 templates/invoice-output.php:291
+#: templates/invoice-output.php:295
 msgid "تومان"
 msgstr "تومان"
 
-#: templates/invoice-output.php:255
+#: templates/invoice-output.php:288
 #, php-format
 msgid "مالیات بر ارزش افزوده (%s٪)"
 msgstr "مالیات بر ارزش افزوده (%s٪)"
 
-#: templates/invoice-output.php:261
+#: templates/invoice-output.php:294
 msgid "مبلغ نهایی"
 msgstr "مبلغ نهایی"
 
@@ -515,19 +527,19 @@ msgid ""
 msgstr ""
 "This number is used for SMS-code login and cannot be changed from this page."
 
-#: includes/class-ahp-helpers.php:111 includes/class-ahp-admin.php:174
+#: includes/class-ahp-helpers.php:111 includes/class-ahp-admin.php:178
 msgid "Pending review"
 msgstr "Pending review"
 
-#: includes/class-ahp-helpers.php:112 includes/class-ahp-admin.php:175
+#: includes/class-ahp-helpers.php:112 includes/class-ahp-admin.php:179
 msgid "Approved"
 msgstr "Approved"
 
-#: includes/class-ahp-helpers.php:113 includes/class-ahp-admin.php:176
+#: includes/class-ahp-helpers.php:113 includes/class-ahp-admin.php:180
 msgid "Rejected"
 msgstr "Rejected"
 
-#: includes/class-ahp-helpers.php:114 includes/class-ahp-admin.php:177
+#: includes/class-ahp-helpers.php:114 includes/class-ahp-admin.php:181
 msgid "Expired"
 msgstr "Expired"
 
@@ -552,7 +564,7 @@ msgstr "New proforma invoice issued: %1$s - Buyer: %2$s"
 msgid "You are not allowed to view this proforma invoice."
 msgstr "You are not allowed to view this proforma invoice."
 
-#: includes/class-ahp-invoice.php:210 includes/class-ahp-admin.php:138
+#: includes/class-ahp-invoice.php:210 includes/class-ahp-admin.php:142
 msgid "Access not allowed"
 msgstr "Access not allowed"
 
@@ -649,8 +661,7 @@ msgstr "Added to proforma invoice"
 msgid "Error; please try again"
 msgstr "Error; please try again"
 
-#: includes/class-ahp-cart.php:417
-#: includes/class-ahp-table-integration.php:133
+#: includes/class-ahp-cart.php:417 includes/class-ahp-table-integration.php:133
 #: includes/class-ahp-table-integration.php:146
 msgid "Add to invoice"
 msgstr "Add to invoice"
@@ -687,41 +698,47 @@ msgstr "Unit price"
 msgid "Total"
 msgstr "Total"
 
-#: includes/class-ahp-admin.php:106 includes/class-ahp-admin.php:107
+#: includes/class-ahp-admin.php:110 includes/class-ahp-admin.php:111
 msgid "Ahan Shahr Proforma"
 msgstr "Ahan Shahr Proforma"
 
-#: includes/class-ahp-admin.php:117
+#: includes/class-ahp-admin.php:121
 msgid "Proforma Invoices"
 msgstr "Proforma Invoices"
 
-#: includes/class-ahp-admin.php:118
+#: includes/class-ahp-admin.php:122
 msgid "Invoices"
 msgstr "Invoices"
 
-#: includes/class-ahp-admin.php:126
+#: includes/class-ahp-admin.php:130
 msgid "Proforma Settings"
 msgstr "Proforma Settings"
 
-#: includes/class-ahp-admin.php:127
+#: includes/class-ahp-admin.php:131
 msgid "Settings"
 msgstr "Settings"
 
-#: includes/class-ahp-admin.php:137
+#: includes/class-ahp-admin.php:141
 msgid "You are not allowed to access this page."
 msgstr "You are not allowed to access this page."
 
-#: includes/class-ahp-admin.php:173
+#: includes/class-ahp-admin.php:177
 msgid "All"
 msgstr "All"
 
-#: includes/class-ahp-admin.php:394
+#: includes/class-ahp-admin.php:403
 msgid ""
 "This is a proforma document and is not an official sales invoice until "
 "finally approved."
 msgstr ""
 "This is a proforma document and is not an official sales invoice until "
 "finally approved."
+
+#: includes/class-ahp-admin.php:412
+msgid ""
+"Please review all information carefully before printing or saving as PDF."
+msgstr ""
+"Please review all information carefully before printing or saving as PDF."
 
 #: includes/class-ahp-auth.php:101 includes/class-ahp-auth.php:272
 msgid "You have made too many requests; please try again shortly."
@@ -795,18 +812,18 @@ msgstr "Thickness: %s"
 msgid "Call us"
 msgstr "Call us"
 
-#. Plugin header field, read by WordPress's get_plugin_data()
+#. Plugin Name of the plugin
 msgid "Ahan Proforma"
 msgstr "Ahan Proforma"
 
-#. Plugin header field, read by WordPress's get_plugin_data()
+#. Description of the plugin
 msgid ""
-"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
-" without requiring WooCommerce."
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices, "
+"without requiring WooCommerce."
 msgstr ""
-"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
-" without requiring WooCommerce."
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices, "
+"without requiring WooCommerce."
 
-#. Plugin header field (Author), read by WordPress's get_plugin_data()
+#. Author of the plugin
 msgid "Moein Akbari"
 msgstr "Moein Akbari"
