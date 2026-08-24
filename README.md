@@ -4,7 +4,7 @@ A standalone, lightweight WordPress plugin that turns rows of the **Ahan Price T
 
 Built for **ahanshahr.com** (a steel/iron merchant site), replacing a previous stack of WooCommerce + several add-ons with one integrated, purpose-built plugin.
 
-**Current version:** 0.9.9
+**Current version:** 1.0.0
 
 ---
 
