@@ -189,11 +189,18 @@ class AHP_Table_Integration {
         return is_numeric( $clean ) ? (float) $clean : null;
     }
 
-    /** Is this row's data-col="desc" column empty (or missing entirely)? */
+    /**
+     * Should the JavaScript fall back to the table's heading (h3/h2/h1) for
+     * this row's description? True whenever the desc column is empty or
+     * missing — regardless of whether size/thickness are present — so the
+     * heading is always prepended in that case (see buildFallbackDescription
+     * in ahp-cart.js, which combines the heading with whatever
+     * build_description() below produced from size/thickness).
+     */
     private static function is_desc_cell_empty( DOMXPath $xpath, DOMNode $row ): bool {
         $desc_cell = $xpath->query( './/td[@data-col="desc"]', $row )->item( 0 );
-        if ( ! $desc_cell ) return true;
-        return trim( $desc_cell->textContent ) === '';
+        $desc_text = $desc_cell ? trim( $desc_cell->textContent ) : '';
+        return $desc_text === '';
     }
 
     /**
@@ -229,16 +236,26 @@ class AHP_Table_Integration {
             }
         }
 
+        // NOTE: The old "final fallback" (concatenating every cell in the
+        // row, e.g. "1000*2000 — 1405/6/1 — بنگاه تهران — برش خورده — فولاد مبارکه")
+        // has been disabled so that ALL rows with no usable desc/size/thick
+        // behave the same way: an empty description is returned here, and
+        // is_desc_cell_empty() flags the button so the JavaScript falls back
+        // to the table's heading (h3/h2/h1) instead, exactly like the
+        // desc-empty case. Kept commented out (not deleted) per asp's request.
+        // if ( empty( $parts ) ) {
+        //     $cells = $xpath->query( './/td', $row );
+        //     $fallback = [];
+        //     foreach ( $cells as $c ) {
+        //         if ( $c->getAttribute( 'data-col' ) === 'price' ) continue;
+        //         $t = trim( $c->textContent );
+        //         if ( $t !== '' ) $fallback[] = $t;
+        //     }
+        //     return implode( ' — ', $fallback );
+        // }
+
         if ( empty( $parts ) ) {
-            // Final fallback: the row's full text (excluding the price column), to avoid an empty description
-            $cells = $xpath->query( './/td', $row );
-            $fallback = [];
-            foreach ( $cells as $c ) {
-                if ( $c->getAttribute( 'data-col' ) === 'price' ) continue;
-                $t = trim( $c->textContent );
-                if ( $t !== '' ) $fallback[] = $t;
-            }
-            return implode( ' — ', $fallback );
+            return '';
         }
 
         return implode( ' — ', $parts );

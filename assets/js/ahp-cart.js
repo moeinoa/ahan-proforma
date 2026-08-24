@@ -212,11 +212,12 @@
      * When the description column in the table was empty
      * (data-ahp-desc-fallback="1" on the button), we walk up the page DOM
      * from the button's location and return the first h3, else h2, else h1
-     * found preceding this button as the product description. If the
+     * found preceding this button as the table's title heading. If the
      * heading text contains the word "قیمت" (price), that part is stripped
-     * and the rest of the text is used as the description.
+     * and the rest of the text is used.
+     * Returns '' if no heading is found.
      */
-    function findFallbackDescription( btn ) {
+    function findHeadingTitle( btn ) {
         var heading = findPrecedingHeading( btn, 'h3' ) ||
                       findPrecedingHeading( btn, 'h2' ) ||
                       findPrecedingHeading( btn, 'h1' );
@@ -234,6 +235,22 @@
                 .trim();
         }
         return text;
+    }
+
+    /**
+     * Builds the final description when the desc column was empty
+     * (data-ahp-desc-fallback="1"). The server already produced a
+     * size/thickness based description (via build_description() in PHP);
+     * here we prepend the table's title heading (found by walking up the
+     * page DOM — something only doable client-side) so the customer sees
+     * something like "قیمت لوله API تست گاز — سایز: 1/2 — ضخامت: 2.8"
+     * instead of just the size/thickness fragment.
+     */
+    function buildFallbackDescription( btn, serverDescription ) {
+        var headingTitle = findHeadingTitle( btn );
+        if ( ! headingTitle ) return serverDescription;
+        if ( ! serverDescription ) return headingTitle;
+        return headingTitle + ' — ' + serverDescription;
     }
 
     /**
@@ -269,8 +286,8 @@
         btn.disabled = true;
 
         var description = btn.getAttribute( 'data-ahp-description' ) || '';
-        if ( ! description && btn.getAttribute( 'data-ahp-desc-fallback' ) === '1' ) {
-            description = findFallbackDescription( btn );
+        if ( btn.getAttribute( 'data-ahp-desc-fallback' ) === '1' ) {
+            description = buildFallbackDescription( btn, description );
         }
 
         ajax( 'ahp_cart_add', {
