@@ -394,8 +394,21 @@
 
                     if ( ! res.success ) {
                         showError( errorCode, ( res.data && res.data.message ) || AHP_AUTH.i18n.genericError );
+                        // Tell anyone waiting on the outcome of this specific
+                        // attempt (e.g. ahp-cart.js, which may have opened an
+                        // empty tab in advance for a pending invoice issuance)
+                        // that it failed, so they can clean up (close the tab)
+                        // instead of leaving the user stuck looking at a blank
+                        // page with no idea their login never completed.
+                        document.dispatchEvent( new CustomEvent( 'ahp:verifyResult', {
+                            detail: { success: false },
+                        } ) );
                         return;
                     }
+
+                    document.dispatchEvent( new CustomEvent( 'ahp:verifyResult', {
+                        detail: { success: true },
+                    } ) );
 
                     sessionStorage.removeItem( STORAGE_KEY );
                     var isNewUser = !! ( res.data && res.data.isNewUser );
@@ -436,6 +449,9 @@
                 .catch( function () {
                     setLoading( stepCode, false );
                     showError( errorCode, AHP_AUTH.i18n.genericError );
+                    document.dispatchEvent( new CustomEvent( 'ahp:verifyResult', {
+                        detail: { success: false },
+                    } ) );
                 } );
         }
 

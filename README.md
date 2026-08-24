@@ -4,7 +4,7 @@ A standalone, lightweight WordPress plugin that turns rows of the **Ahan Price T
 
 Built for **ahanshahr.com** (a steel/iron merchant site), replacing a previous stack of WooCommerce + several add-ons with one integrated, purpose-built plugin.
 
-**Current version:** 0.9.6
+**Current version:** 0.9.9
 
 ---
 
@@ -119,7 +119,7 @@ xgettext \
   --keyword=_x:1,2c --keyword=_ex:1,2c \
   --keyword=_n:1,2 --keyword=_nx:1,2,4c \
   --keyword=esc_attr_x:1,2c --keyword=esc_html_x:1,2c \
-  --package-name="Ahan Proforma" --package-version="0.9.6" \
+  --package-name="Ahan Proforma" --package-version="0.9.9" \
   --copyright-holder="Ahan Shahr" \
   -o languages/ahan-proforma.pot \
   $(find . -name "*.php")
@@ -149,6 +149,8 @@ JavaScript files (`assets/js/*.js`) contain **no hardcoded UI text**. All labels
 | `ahp_login_redirect_url` | Where a customer is sent after a standalone-page login (not used by the popup flow) |
 | `ahp_customer_admin_redirect_url` | Where a customer is redirected if they try to access wp-admin |
 | `ahp_sms_settings` | Override SMS gateway settings programmatically |
+| `ahp_sms_otp_request_body` | Filter the outgoing request body sent to Farapayamak's `SendOTP` endpoint |
+| `ahp_sms_text_request_body` | Filter the outgoing request body sent to Farapayamak's `SendSMS` (free-text) endpoint |
 | `ahp_invoice_output_head` | Fires in `<head>` of the standalone invoice output page (used to inject custom colors) |
 
 ---

@@ -4,7 +4,7 @@
 
 ساخته‌شده برای **ahanshahr.com** (سایت فروش آهن‌آلات)، جایگزین یک مجموعهٔ قبلی از ووکامرس + چند افزونهٔ جانبی، با یک پلاگین یکپارچه و اختصاصی.
 
-**نسخهٔ فعلی:** 0.9.6
+**نسخهٔ فعلی:** 0.9.9
 
 ---
 
@@ -119,7 +119,7 @@ xgettext \
   --keyword=_x:1,2c --keyword=_ex:1,2c \
   --keyword=_n:1,2 --keyword=_nx:1,2,4c \
   --keyword=esc_attr_x:1,2c --keyword=esc_html_x:1,2c \
-  --package-name="Ahan Proforma" --package-version="0.9.6" \
+  --package-name="Ahan Proforma" --package-version="0.9.9" \
   --copyright-holder="Ahan Shahr" \
   -o languages/ahan-proforma.pot \
   $(find . -name "*.php")
@@ -149,6 +149,8 @@ msgfmt languages/ahan-proforma-fa_IR.po -o languages/ahan-proforma-fa_IR.mo
 | `ahp_login_redirect_url` | مقصد مشتری بعد از ورود در صفحهٔ مستقل (در جریان پاپ‌آپ استفاده نمی‌شود) |
 | `ahp_customer_admin_redirect_url` | مقصد مشتری در صورت تلاش برای دسترسی به wp-admin |
 | `ahp_sms_settings` | بازنویسی برنامه‌ای تنظیمات وب‌سرویس پیامکی |
+| `ahp_sms_otp_request_body` | فیلتر کردن بدنهٔ درخواست ارسالی به اندپوینت `SendOTP` فراپیامک |
+| `ahp_sms_text_request_body` | فیلتر کردن بدنهٔ درخواست ارسالی به اندپوینت `SendSMS` (متن آزاد) فراپیامک |
 | `ahp_invoice_output_head` | در `<head>` صفحهٔ خروجی مستقل پیش‌فاکتور اجرا می‌شود (برای تزریق رنگ‌های سفارشی استفاده می‌شود) |
 
 ---

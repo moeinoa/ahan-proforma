@@ -44,15 +44,22 @@
             win.document.open();
             win.document.write(
                 '<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8">' +
+                // Without this, mobile browsers render the tab at a default
+                // desktop-width viewport (~980px) and then zoom/scale it down,
+                // making the spinner and text tiny and off-center instead of
+                // actually filling the phone's screen.
+                '<meta name="viewport" content="width=device-width, initial-scale=1">' +
                 '<title>' + escapeHtml( AHP_CART.i18n.issuing ) + '</title>' +
                 '<style>' +
                 'html,body{height:100%;margin:0;}' +
                 'body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;' +
+                'padding:24px;box-sizing:border-box;text-align:center;' +
                 'font-family:Tahoma,"Vazirmatn",sans-serif;color:#4b5563;background:#fff;}' +
-                '.ahp-loading-spinner{width:40px;height:40px;border-radius:50%;' +
+                '.ahp-loading-spinner{width:40px;height:40px;border-radius:50%;flex-shrink:0;' +
                 'border:4px solid #e5e7eb;border-top-color:#0f9d58;' +
                 'animation:ahp-spin 0.8s linear infinite;}' +
                 '@keyframes ahp-spin{to{transform:rotate(360deg);}}' +
+                'p{margin:0;font-size:16px;line-height:1.6;max-width:280px;}' +
                 '</style></head><body>' +
                 '<div class="ahp-loading-spinner" aria-hidden="true"></div>' +
                 '<p>' + escapeHtml( AHP_CART.i18n.issuing ) + '</p>' +
@@ -661,6 +668,17 @@
     // then, next to the login modal, looks confusing and like the site is
     // broken). This submit is itself a direct user action, so the synchronous
     // window.open here isn't treated as a pop-up by the browser either.
+    //
+    // Important: submitting this form only means the user *attempted* to
+    // verify a code — it says nothing about whether that code was actually
+    // correct (or even non-empty). The real success/failure only becomes
+    // known asynchronously, in ahp-auth.js's verifyCode(). So the tab is
+    // opened here (to keep it exempt from pop-up blockers) but is treated as
+    // provisional: the 'ahp:verifyResult' listener below closes it again
+    // immediately if the attempt turns out to have failed, instead of
+    // leaving the user staring at a stuck blank/loading tab with no proforma
+    // invoice ever coming and no indication their login didn't actually
+    // succeed.
     document.addEventListener( 'submit', function ( e ) {
         if ( ! pendingIssueAfterLogin || pendingIssueAfterLogin.tab ) return;
         var form = e.target;
@@ -668,6 +686,22 @@
 
         pendingIssueAfterLogin.tab = window.open( '', '_blank' );
         showLoadingInTab( pendingIssueAfterLogin.tab );
+    } );
+
+    // Fired by ahp-auth.js's verifyCode() for every outcome of a verify
+    // attempt (wrong/empty code, network error, or genuine success). On
+    // failure, close the provisional tab opened above right away — the user
+    // stays on the login modal, sees its error message, and is never left
+    // wondering why a blank tab is sitting there with nothing happening in
+    // it. On success, do nothing here: the existing 'ahp:loggedIn' listener
+    // above already takes over and fills that same tab with the real invoice.
+    document.addEventListener( 'ahp:verifyResult', function ( e ) {
+        if ( ! pendingIssueAfterLogin ) return;
+        if ( e.detail && e.detail.success ) return;
+
+        var tab = pendingIssueAfterLogin.tab;
+        if ( tab && ! tab.closed ) tab.close();
+        pendingIssueAfterLogin.tab = null;
     } );
 
     // If the user closes the login modal without completing login (clicking
