@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <div class="ahp-cart-wrap" data-ahp-cart-root>
-    <h3 class="ahp-cart-title"><?php esc_html_e( 'Proforma cart', 'ahan-proforma' ); ?></h3>
+    <h1 class="ahp-cart-title"><?php esc_html_e( 'Proforma cart', 'ahan-proforma' ); ?></h1>
 
     <div class="ahp-cart-body" data-ahp-cart-body>
         <p class="ahp-cart-loading"><?php esc_html_e( 'Loading…', 'ahan-proforma' ); ?></p>

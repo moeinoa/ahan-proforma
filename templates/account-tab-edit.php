@@ -11,7 +11,8 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <h2 class="ahp-account-panel-title"><?php esc_html_e( 'Edit information', 'ahan-proforma' ); ?></h2>
 
-<form class="ahp-account-form" data-ahp-name-form>
+<div class="admin-panel-form">
+	<form class="ahp-account-form" data-ahp-name-form>
     <h3 class="ahp-account-form-title"><?php esc_html_e( 'First and last name', 'ahan-proforma' ); ?></h3>
 
     <div class="ahp-account-field-row">
@@ -27,9 +28,9 @@ defined( 'ABSPATH' ) || exit;
     <p class="ahp-account-form-msg" data-ahp-name-msg role="status" aria-live="polite"></p>
 
     <button type="submit" class="ahp-account-save-btn"><?php esc_html_e( 'Save', 'ahan-proforma' ); ?></button>
-</form>
+</form> 
 
-<hr class="ahp-account-divider" />
+<!-- <hr class="ahp-account-divider" /> -->
 
 <div class="ahp-account-mobile-block" data-ahp-mobile-block>
     <h3 class="ahp-account-form-title"><?php esc_html_e( 'Mobile number', 'ahan-proforma' ); ?></h3>
@@ -66,4 +67,5 @@ defined( 'ABSPATH' ) || exit;
             <button type="button" class="ahp-account-cancel-btn" data-ahp-mobile-cancel><?php esc_html_e( 'Cancel', 'ahan-proforma' ); ?></button>
         </div>
     </form>
+</div>
 </div>
