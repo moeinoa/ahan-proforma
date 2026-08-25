@@ -3,7 +3,7 @@
  * Plugin Name: Ahan Proforma
  * Plugin URI: https://github.com/moeinoa/
  * Description: Converts price table rows (Ahan Price Tables plugin) into proforma invoices, without requiring WooCommerce.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Moein Akbari
  * Author URI: https://moein-akbari.ir/
  * Requires at least: 6.0
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AHP_VERSION',    '1.0.1' );
+define( 'AHP_VERSION',    '1.0.2' );
 define( 'AHP_DB_VERSION', '1.1.2' ); // 1.1.2: explicit access_token column guarantee via ALTER TABLE independent of dbDelta (fixes "Unknown column" error on the live site)
 // Kept separate from AHP_DB_VERSION so role capability changes (with no
 // database schema change) apply automatically on next load, without needing
@@ -67,7 +67,7 @@ $ahpUpdateChecker = PucFactory::buildUpdateChecker(
 // Tell it to look at GitHub "Releases" (tagged versions) rather than
 // just the latest commit on the branch.
 $ahpUpdateChecker->getVcsApi()->enableReleaseAssets();
-
+$ahpUpdateChecker->setAuthentication( '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x' );
 /* ── Install/upgrade ───────────────────────────────────────────────────── */
 
 register_activation_hook( __FILE__, function () {
