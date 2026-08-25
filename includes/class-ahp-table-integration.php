@@ -112,7 +112,7 @@ class AHP_Table_Integration {
         $desc_cell_empty = self::is_desc_cell_empty( $xpath, $row );
         $description     = self::build_description( $xpath, $row );
         $code            = self::build_code( $xpath, $row );
-        $unit            = self::guess_unit( $description );
+        $unit            = self::detect_unit( $xpath, $row );
         $row_hash        = substr( hash( 'sha256', $description . '|' . $price ), 0, 32 );
 
         $btn = $dom->createElement( 'button' );
@@ -276,21 +276,30 @@ class AHP_Table_Integration {
     }
 
     /**
-     * Guesses the default unit from the product description text; this is
-     * merely a suggested default for pre-selecting the add form — the user
-     * can change it in Phase 2. Only two values are allowed anywhere in the
-     * system: 'kg' or 'shakhe' (bundle/rod).
+     * Reads the row's actual unit column (data-col="unit", added on the
+     * APT side) and maps its Persian text to one of the three values
+     * allowed anywhere in this system (see AHP_Helpers::allowed_units()):
+     * 'kg', 'shakhe' (bundle/rod), or 'adad' (count/piece).
      *
-     * Note: the matched substrings below ("شاخه" = bundle/rod, "متر" =
-     * meter) are intentionally kept in Persian because they match actual
-     * Persian text coming from the source price-table data, not
-     * user-facing plugin UI strings.
+     * If the table has no unit column at all (APT didn't mark one — this
+     * is a normal, valid case for tables like fittings/connectors where
+     * items are simply sold by the piece), the row is treated as 'adad'.
+     * An unrecognized value in a present unit column also falls back to
+     * 'adad' rather than guessing, so a labeling change on the APT side
+     * can never silently produce a wrong 'kg'/'shakhe'.
+     *
+     * Note: the matched strings below ("کیلوگرم", "شاخه") are intentionally
+     * kept in Persian because they match actual Persian text coming from
+     * the source price-table data, not user-facing plugin UI strings.
      */
-    private static function guess_unit( string $description ): string {
-        if ( str_contains( $description, 'شاخه' ) || str_contains( $description, 'متر' ) ) {
-            return 'shakhe';
+    private static function detect_unit( DOMXPath $xpath, DOMNode $row ): string {
+        $unit_cell = $xpath->query( './/td[@data-col="unit"]', $row )->item( 0 );
+        if ( $unit_cell ) {
+            $text = trim( $unit_cell->textContent );
+            if ( $text === 'کیلوگرم' ) return 'kg';
+            if ( $text === 'شاخه' )    return 'shakhe';
         }
-        return 'kg';
+        return 'adad';
     }
 
     /** "Call us" button — links to the store's phone number (from settings, editable in Phase 5) */

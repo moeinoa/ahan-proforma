@@ -267,7 +267,7 @@ class AHP_Cart {
 
         if ( $description === '' )        return null;
         if ( $unit_price <= 0.0 )         return null; // an item with no valid price should never enter the cart
-        if ( ! in_array( $unit, [ 'kg', 'shakhe' ], true ) ) return null; // only these two units are allowed anywhere in the system
+        if ( ! in_array( $unit, AHP_Helpers::allowed_units(), true ) ) return null; // only these units are allowed anywhere in the system
         if ( $quantity <= 0 )             $quantity = 1;
 
         return [
@@ -381,7 +381,7 @@ class AHP_Cart {
                 'item_key'         => $item['item_key'],
                 'description'      => $item['description'],
                 'code'             => $item['code'],
-                'unit'             => $item['unit'] === 'kg' ? __( 'kg', 'ahan-proforma' ) : __( 'bundle', 'ahan-proforma' ),
+                'unit'             => AHP_Helpers::unit_label( $item['unit'] ),
                 'unit_price'       => $item['unit_price'],
                 'unit_price_fa'    => AHP_Helpers::format_toman( $item['unit_price'] ),
                 'quantity'         => $item['quantity'],

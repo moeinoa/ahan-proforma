@@ -248,7 +248,7 @@ class AHP_Admin {
         $quantity    = isset( $_POST['quantity'] ) ? (float) $_POST['quantity'] : 0;
         $unit_price  = isset( $_POST['unit_price'] ) ? (int) $_POST['unit_price'] : 0;
 
-        $allowed_units = [ 'kg', 'shakhe' ];
+        $allowed_units = AHP_Helpers::allowed_units();
 
         if ( $description === '' || ! in_array( $unit, $allowed_units, true ) || $quantity <= 0 || $unit_price < 0 ) {
             $redirect_args['ahp_notice'] = 'item_update_failed';

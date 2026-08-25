@@ -8,10 +8,10 @@ defined( 'ABSPATH' ) || exit;
 
 $notice = isset( $_GET['ahp_notice'] ) ? sanitize_key( wp_unslash( $_GET['ahp_notice'] ) ) : '';
 
-$unit_labels = [
-    'kg'     => __( 'kg', 'ahan-proforma' ),
-    'shakhe' => __( 'bundle', 'ahan-proforma' ),
-];
+$unit_labels = [];
+foreach ( AHP_Helpers::allowed_units() as $u ) {
+    $unit_labels[ $u ] = AHP_Helpers::unit_label( $u );
+}
 ?>
 <div class="wrap">
     <h1><?php esc_html_e( 'Ahan Shahr Proforma Invoices', 'ahan-proforma' ); ?></h1>

@@ -267,7 +267,14 @@ do_action( 'ahp_invoice_output_head' );
                             <br><small style="color:var(--ahp-text-muted);"><?php echo esc_html( $item['product_code'] ); ?></small>
                         <?php endif; ?>
                     </td>
-                    <td><?php echo esc_html( $item['unit'] === 'kg' ? __( 'کیلوگرم', 'ahan-proforma' ) : __( 'شاخه', 'ahan-proforma' ) ); ?></td>
+                    <?php
+                    $unit_display_map = [
+                        'kg'     => __( 'کیلوگرم', 'ahan-proforma' ),
+                        'shakhe' => __( 'شاخه', 'ahan-proforma' ),
+                        'adad'   => __( 'عدد', 'ahan-proforma' ),
+                    ];
+                    ?>
+                    <td><?php echo esc_html( $unit_display_map[ $item['unit'] ] ?? $item['unit'] ); ?></td>
                     <td><?php echo esc_html( AHP_Helpers::to_persian_digits( (string) (int) $item['quantity'] ) ); ?></td>
                     <td><?php echo esc_html( AHP_Helpers::format_toman( (float) $item['unit_price'] ) ); ?></td>
                     <td><?php echo esc_html( AHP_Helpers::format_toman( (float) $item['line_total'] ) ); ?></td>

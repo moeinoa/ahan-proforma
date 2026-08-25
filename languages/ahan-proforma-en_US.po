@@ -231,13 +231,17 @@ msgstr "Edit information"
 msgid "Log out"
 msgstr "Log out"
 
-#: templates/admin-invoices-list.php:12 includes/class-ahp-cart.php:384
+#: templates/admin-invoices-list.php:13 includes/class-ahp-helpers.php:133
 msgid "kg"
 msgstr "kg"
 
-#: templates/admin-invoices-list.php:13 includes/class-ahp-cart.php:384
+#: templates/admin-invoices-list.php:13 includes/class-ahp-helpers.php:134
 msgid "bundle"
 msgstr "bundle"
+
+#: templates/admin-invoices-list.php:13 includes/class-ahp-helpers.php:135
+msgid "piece"
+msgstr "piece"
 
 #: templates/admin-invoices-list.php:17
 msgid "Ahan Shahr Proforma Invoices"

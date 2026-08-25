@@ -4,7 +4,7 @@ A standalone, lightweight WordPress plugin that turns rows of the **Ahan Price T
 
 Built for **ahanshahr.com** (a steel/iron merchant site), replacing a previous stack of WooCommerce + several add-ons with one integrated, purpose-built plugin.
 
-**Current version:** 1.0.0
+**Current version:** 1.0.4
 
 ---
 
@@ -29,6 +29,18 @@ Every table, cart, invoice, and account feature is implemented from scratch, spe
 ### Soft dependency on Ahan Price Tables (APT)
 
 This plugin never calls any `APT_*` class directly. The **only** connection point is the `apt_table_rendered_html` filter, which this plugin hooks into to inject the "Buy" column into each table's final HTML. If the APT plugin is inactive, this plugin still loads without errors — only the "Add to invoice" button on price tables won't appear.
+
+### Unit detection
+
+Each row's measurement unit is read from a `data-col="unit"` cell in the table HTML (added on the APT side). The Persian text is mapped to one of three values — the only ones allowed anywhere in this system, defined in `AHP_Helpers::allowed_units()`:
+
+| Value | Meaning | Matched APT text |
+|---|---|---|
+| `kg` | Sold by weight | `کیلوگرم` |
+| `shakhe` | Sold by bundle/rod | `شاخه` |
+| `adad` | Sold by count/piece | *(default — used whenever the table has no unit column at all, e.g. fittings/connectors tables)* |
+
+If a unit column is present but its text doesn't match a known value, the row also falls back to `adad` rather than guessing — a labeling change on the APT side can never silently produce a wrong `kg`/`shakhe`. See `AHP_Table_Integration::detect_unit()`.
 
 ### Dedicated database tables
 

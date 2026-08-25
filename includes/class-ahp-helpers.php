@@ -115,4 +115,25 @@ class AHP_Helpers {
         ];
         return $labels[ $status ] ?? $status;
     }
+
+    /**
+     * Single source of truth for the item measurement unit: 'kg' (weight),
+     * 'shakhe' (bundle/rod), or 'adad' (count/piece — the default used
+     * whenever the source price table has no unit column at all).
+     * Every place in the codebase that validates or displays a unit must
+     * go through this list/label map instead of hardcoding the values.
+     */
+    public static function allowed_units(): array {
+        return [ 'kg', 'shakhe', 'adad' ];
+    }
+
+    /** Translated label for a cart/invoice item unit */
+    public static function unit_label( string $unit ): string {
+        $labels = [
+            'kg'     => __( 'kg', 'ahan-proforma' ),
+            'shakhe' => __( 'bundle', 'ahan-proforma' ),
+            'adad'   => __( 'piece', 'ahan-proforma' ),
+        ];
+        return $labels[ $unit ] ?? $unit;
+    }
 }

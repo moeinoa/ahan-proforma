@@ -101,7 +101,7 @@ class AHP_DB {
          * source_row_hash  : hash of the source row's full text, purely for future tracking/reporting (not used by current logic)
          * product_code     : product code, if any (nullable)
          * description      : full product description (a snapshot combining the desc/code-size/code-thick columns' final text)
-         * unit             : 'kg' or 'shakhe' (bundle/rod) - only these two values are allowed (Phase 2 validates this)
+         * unit             : 'kg', 'shakhe' (bundle/rod), or 'adad' (piece/count) - see AHP_Helpers::allowed_units()
          * quantity          : quantity/amount entered by the user
          * unit_price        : unit price (Rials) - a snapshot of the table's price column at the moment it was added
          * line_total        : quantity * unit_price (computed and stored at the moment it was added, not at display time)
