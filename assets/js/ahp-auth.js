@@ -144,6 +144,18 @@
 
         function closeAuthModal() {
             if ( ! modal || ! overlay ) return;
+
+            // If focus is still inside the modal (e.g. the user just pressed
+            // Escape or clicked "close" while typing in a field), move it out
+            // first. Setting aria-hidden on an element that still contains
+            // focus is invalid and trips a console warning in Chromium
+            // browsers ("Blocked aria-hidden on an element because its
+            // descendant retained focus"), since screen readers must never
+            // have a focused element hidden from them.
+            if ( modal.contains( document.activeElement ) ) {
+                document.activeElement.blur();
+            }
+
             modal.classList.remove( 'ahp-open' );
             overlay.classList.remove( 'ahp-visible' );
             modal.setAttribute( 'aria-hidden', 'true' );
