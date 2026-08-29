@@ -15,7 +15,11 @@ $logout_url   = wp_logout_url( $current_url );
 
 	<nav class="ahp-account-tabs">
 		<a href="<?php echo esc_url( $account_url ); ?>" class="ahp-account-tab<?php echo $tab === 'invoices' ? ' is-active' : ''; ?>">
-			<svg viewBox="0 0 24 24" width="17" height="17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.7"/><path d="M4.5 20c1.2-3.5 4.2-5.5 7.5-5.5s6.3 2 7.5 5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+			<svg viewBox="0 0 24 24" width="17" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M6 2.5h9l3 3v15a0.5 0.5 0 0 1-0.5 0.5h-11.5a0.5 0.5 0 0 1-0.5-0.5v-18a0.5 0.5 0 0 1 0.5-0.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+				<path d="M15 2.5v3h3" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+				<path d="M8 13h8M8 16.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+			</svg>
 			<?php esc_html_e( 'My proforma invoices', 'ahan-proforma' ); ?>
 		</a>
 		<a href="<?php echo esc_url( $cart_url ); ?>" class="ahp-account-tab" target="_blank" rel="noopener noreferrer">
