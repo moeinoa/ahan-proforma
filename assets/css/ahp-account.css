@@ -16,9 +16,10 @@
 
 .ahp-account-tabs {
     display: flex;
-    gap: 4px;
+    gap: 4px 12px;
     border-bottom: 1px solid var(--ahp-border);
     margin-bottom: 24px;
+    flex-wrap: wrap;
 }
 
 .ahp-account-tab {
@@ -29,6 +30,9 @@
     text-decoration: none;
     border-bottom: 2px solid transparent;
     transition: color var(--ahp-transition), border-color var(--ahp-transition);
+	display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .ahp-account-tab:hover {
@@ -46,7 +50,33 @@
     font-weight: 800;
     color: var(--ahp-text);
 }
-
+@media (min-width:768px) {
+	.ahp-account-tabs {
+		gap: 8px;
+		border: none;
+		margin: 0;
+		flex-direction:column;
+		width: fit-content;
+	}
+	.ahp-account-wrap {
+		display: flex;
+		gap: 24px;
+	}
+	.ahp-account-tab {
+		background: var(--ahp-bg-soft);
+		border: none !important;
+		line-height: 24px;
+		border-radius: 8px;
+		padding: 8px 20px !important;
+	}
+	.ahp-account-tab.is-active, .ahp-account-tab:hover {
+		background: var(--ahp-primary);
+		color: var(--ahp-bg) !important;
+	}
+}
+.ahp-account-panel {
+    flex: 1;
+}
 .ahp-account-empty {
     text-align: center;
     color: var(--ahp-text-muted);
@@ -59,9 +89,10 @@
 /* ── لیست پیش‌فاکتورها ────────────────────────────────────────────────── */
 
 .ahp-invoice-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 10px;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 }
 
 .ahp-invoice-card {
@@ -75,6 +106,8 @@
     border-radius: var(--ahp-radius);
     flex-wrap: wrap;
     transition: border-color var(--ahp-transition), box-shadow var(--ahp-transition);
+	flex-direction: column;
+    align-content: center;
 }
 
 .ahp-invoice-card:hover {
@@ -86,6 +119,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+	width: 100%;
 }
 
 .ahp-invoice-view-btn {
@@ -98,6 +132,10 @@
     font-size: 13px;
     font-weight: 700;
     transition: background var(--ahp-transition);
+	line-height: normal;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .ahp-invoice-view-btn:hover {
@@ -109,20 +147,21 @@
     display: flex;
     align-items: center;
     gap: 10px;
+	justify-content: space-between;
 }
 
 .ahp-invoice-number {
     font-weight: 700;
     color: var(--ahp-text);
 }
-
 .ahp-invoice-status {
-    font-size: 12.5px;
+    font-size: 11px;
     font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
+    padding: 3px 6px;
+    border-radius: 8px;
     background: var(--ahp-bg-soft);
     color: var(--ahp-text-muted);
+    line-height: 24px;
 }
 
 .ahp-invoice-status--pending  { background: #fef3c7; color: #92400e; }
@@ -132,9 +171,19 @@
 
 .ahp-invoice-card-meta {
     display: flex;
-    gap: 16px;
+    gap: 6px;
     font-size: 13px;
     color: var(--ahp-text-muted);
+    flex-direction: column;
+    align-items: center;
+}
+
+.ahp-invoice-card-meta span {
+    line-height: 1.8;
+}
+.ahp-invoice-card-meta span:last-child {
+    color: var(--ahp-primary);
+    font-weight: bold;
 }
 
 /* ── فرم‌های ویرایش اطلاعات ───────────────────────────────────────────── */
@@ -150,15 +199,12 @@
     flex-direction: row;
     gap: 24px;
 }
-@media (max-width: 500px) {
+@media (max-width: 768px) {
 	.admin-panel-form {
 		flex-direction: column;
 	}
 	.ahp-account-tab {
 		padding: 4px 0px;
-	}
-	.ahp-account-tabs {
-		justify-content: space-between;
 	}
 	.ahp-invoice-card-meta {
 		gap: 0px;
