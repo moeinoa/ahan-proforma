@@ -93,7 +93,10 @@ foreach ( AHP_Helpers::allowed_units() as $u ) {
                     <td><?php echo esc_html( AHP_Helpers::to_persian_digits( $invoice['buyer_phone'] ) ); ?></td>
                     <td><?php echo esc_html( AHP_Helpers::format_toman( (float) $invoice['total'] ) ); ?></td>
                     <td><?php echo esc_html( AHP_Helpers::invoice_status_label( $invoice['status'] ) ); ?></td>
-                    <td><?php echo esc_html( AHP_Helpers::to_persian_digits( $invoice['created_at'] ) ); ?></td>
+                    <td>
+                        <span class="ahp-invoice-card-time"><?php echo esc_html( AHP_Helpers::format_time( $invoice['created_at'] ) ); ?></span><br>
+                        <span class="ahp-invoice-card-date"><?php echo esc_html( AHP_Helpers::format_jalali_date( $invoice['created_at'] ) ); ?></span>
+                    </td>
                     <td>
                         <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
                             <?php wp_nonce_field( 'ahp_update_invoice_status' ); ?>

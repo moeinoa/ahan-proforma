@@ -229,7 +229,8 @@ do_action( 'ahp_invoice_output_head' );
         </div>
         <div class="ahp-inv-meta">
             <strong><?php echo esc_html( AHP_Helpers::to_persian_digits( $invoice['invoice_number'] ) ); ?></strong>
-            <span><?php echo esc_html( AHP_Helpers::to_persian_digits( $invoice['created_at'] ) ); ?></span><br>
+            <span class="ahp-inv-time"><?php echo esc_html( AHP_Helpers::format_time( $invoice['created_at'] ) ); ?></span>
+            <span class="ahp-inv-date"><?php echo esc_html( AHP_Helpers::format_jalali_date( $invoice['created_at'] ) ); ?></span><br>
             <span class="ahp-inv-status"><?php echo esc_html( AHP_Helpers::invoice_status_label( $invoice['status'] ) ); ?></span>
         </div>
     </div>

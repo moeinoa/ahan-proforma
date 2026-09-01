@@ -75,6 +75,35 @@ class AHP_Helpers {
     }
 
     /**
+     * Convert a MySQL datetime (e.g. "2026-08-23 14:28:08", stored as Gregorian)
+     * into a Jalali date display string, e.g. "۱۴۰۵/۰۶/۰۱".
+     * Returns an empty string if the input can't be parsed.
+     */
+    public static function format_jalali_date( string $mysql_datetime ): string {
+        $ts = strtotime( $mysql_datetime );
+        if ( ! $ts ) return '';
+
+        [ $jy, $jm, $jd ] = self::gregorian_to_jalali(
+            (int) gmdate( 'Y', $ts ),
+            (int) gmdate( 'n', $ts ),
+            (int) gmdate( 'j', $ts )
+        );
+        $str = sprintf( '%04d/%02d/%02d', $jy, $jm, $jd );
+        return self::to_persian_digits( $str );
+    }
+
+    /**
+     * Extract just the time portion (H:i:s) from a MySQL datetime, Persian-digitized.
+     * Returns an empty string if the input can't be parsed.
+     */
+    public static function format_time( string $mysql_datetime ): string {
+        $ts = strtotime( $mysql_datetime );
+        if ( ! $ts ) return '';
+
+        return self::to_persian_digits( gmdate( 'H:i:s', $ts ) );
+    }
+
+    /**
      * Build the display invoice number: {Jalali year}/A/{4-digit, zero-padded, incrementing, never reset counter}.
      * The middle letter can be changed via the ahp_invoice_number_prefix filter (default A).
      *

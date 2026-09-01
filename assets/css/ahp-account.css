@@ -181,7 +181,7 @@
 .ahp-invoice-card-meta span {
     line-height: 1.8;
 }
-.ahp-invoice-card-meta span:last-child {
+.ahp-invoice-card-meta .ahp-invoice-card-total {
     color: var(--ahp-primary);
     font-weight: bold;
 }
