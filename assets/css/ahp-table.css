@@ -86,7 +86,7 @@
 
 .ahp-contact-btn {
     background-color: var(--ahp-contact-light, #fdf1e2);
-    color: var(--ahp-contact-dark, #b3721f);
+    color: #1eae78;
 }
 
 .ahp-contact-btn:hover {
