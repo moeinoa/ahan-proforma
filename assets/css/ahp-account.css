@@ -44,6 +44,28 @@
     border-bottom-color: var(--ahp-primary);
 }
 
+/* بج تعداد داخل بدنهٔ دکمه‌های تب (پیش‌فاکتورهای من / سبد پیش‌فاکتور) */
+.ahp-tab-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--ahp-accent), #ef4444);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(208, 52, 44, .35);
+}
+
+.ahp-tab-count-badge:empty,
+.ahp-tab-count-badge[data-ahp-cart-count="0"] {
+    display: none;
+}
+
 .ahp-account-panel-title {
     margin: 0 0 20px;
     font-size: 18px;
@@ -97,17 +119,13 @@
 
 .ahp-invoice-card {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 14px 16px;
+    padding: 16px;
     background: var(--ahp-bg);
     border: 1px solid var(--ahp-border);
     border-radius: var(--ahp-radius);
-    flex-wrap: wrap;
     transition: border-color var(--ahp-transition), box-shadow var(--ahp-transition);
-	flex-direction: column;
-    align-content: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .ahp-invoice-card:hover {
@@ -118,37 +136,18 @@
 .ahp-invoice-card-info {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-	width: 100%;
-}
-
-.ahp-invoice-view-btn {
-    flex-shrink: 0;
-    padding: 8px 18px;
-    background: var(--ahp-primary);
-    color: #fff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
-    transition: background var(--ahp-transition);
-	line-height: normal;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-.ahp-invoice-view-btn:hover {
-    background: var(--ahp-primary-dark);
-    color: #fff;
+    gap: 10px;
+    width: 100%;
 }
 
 .ahp-invoice-card-main {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
-	justify-content: space-between;
+    flex-direction: row-reverse;
 }
+
 
 .ahp-invoice-number {
     font-weight: 700;
@@ -164,26 +163,96 @@
     line-height: 24px;
 }
 
-.ahp-invoice-status--pending  { background: #fef3c7; color: #92400e; }
-.ahp-invoice-status--approved { background: var(--ahp-primary-light); color: var(--ahp-primary-dark); }
-.ahp-invoice-status--rejected { background: #fee2e2; color: #991b1b; }
-.ahp-invoice-status--expired  { background: var(--ahp-bg-soft); color: var(--ahp-text-muted); }
-
+.ahp-invoice-status--expired {
+    background: #ededed;
+    color: #757575;
+}
+.ahp-invoice-status--approved {
+    background: #cefae9;
+    color: #1eae78;
+}
+.ahp-invoice-status--pending {
+    background: #fff6d7;
+    color: #eaa40c;
+}
+.ahp-invoice-status--rejected {
+    background: #ffd8dc;
+    color: #d22538;
+}
 .ahp-invoice-card-meta {
     display: flex;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--ahp-text-muted);
     flex-direction: column;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--ahp-text-muted);
+    font-weight: 300;
+    line-height: 22px;
+}
+.ahp-invoice-card-meta-label {
+    flex-shrink: 0;
+}
+.ahp-invoice-card-time, .ahp-invoice-card-date {
+    display: flex;
     align-items: center;
+    gap: 2px;
+    flex-direction: row-reverse;
+}
+.ahp-invoice-card-meta-value {
+    flex-shrink: 0;
+}
+.ahp-invoice-card-time::after,
+.ahp-invoice-card-date::after {
+    content: "";
+    order: 1;
+    flex: 1 1 auto;
+    border-top: 1px dashed var(--ahp-border);
+    margin: 0 4px;
+}
+.ahp-invoice-card-icon { order: 3; }
+.ahp-invoice-card-meta-label { order: 2; }
+.ahp-invoice-card-meta-value { order: 0; }
+.ahp-invoice-card-time::after,
+.ahp-invoice-card-date::after { order: 1; }
+.ahp-invoice-card-icon {
+    flex-shrink: 0;
+    color: var(--ahp-text-muted);
 }
 
-.ahp-invoice-card-meta span {
-    line-height: 1.8;
+.ahp-invoice-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    flex-direction: row-reverse;
+    gap: 8px;
 }
-.ahp-invoice-card-meta .ahp-invoice-card-total {
+
+.ahp-invoice-card-total {
     color: var(--ahp-primary);
     font-weight: bold;
+    font-size: 14px;
+    background: var(--ahp-primary-light);
+    padding: 8px;
+    line-height: 22px;
+    white-space: nowrap;
+    border-radius: 8px;
+    flex: 1;
+    text-align: center;
+}
+
+.ahp-invoice-view-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: var(--ahp-primary);
+    border-radius: 8px;
+    flex-shrink: 0;
+    padding: 10px;
+}
+.ahp-invoice-view-icon svg {
+    width: 18px;
+    height: 18px;
 }
 
 /* ── فرم‌های ویرایش اطلاعات ───────────────────────────────────────────── */

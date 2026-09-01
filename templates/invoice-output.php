@@ -111,6 +111,7 @@ $site_name = get_bloginfo( 'name' );
         justify-content: space-between;
         padding: 8px 0;
         font-size: 14px;
+        gap: 24px;
     }
     .ahp-inv-totals-row.total {
         border-top: 2px solid var(--ahp-primary);

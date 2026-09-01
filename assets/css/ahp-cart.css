@@ -649,9 +649,12 @@ html[dir="rtl"] .ahp-drawer {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "desc desc desc remove"
         "meta qty price total";
-    transition: background var(--ahp-transition);
+    transition: all var(--ahp-transition);
     padding: 10px;
+    margin-block-end: 6px;
+    border-radius: var(--ahp-radius);
 }
+
 @media ( max-width: 560px ) {
 	.ahp-drawer .ahp-cart-table tbody tr {
 		grid-template-columns: auto 1fr;
