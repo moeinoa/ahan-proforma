@@ -205,6 +205,37 @@ class AHP_Cart {
         self::save_items( [] );
     }
 
+    /**
+     * Atomically takes the logged-in user's cart for issuing a proforma
+     * invoice. The cart's usermeta row is deleted with a single query whose
+     * affected-row count decides the winner, so two simultaneous requests
+     * (double-click, two tabs) can never both issue an invoice from the same
+     * cart. Returns null if the cart is empty or another request took it first.
+     * On a later failure the caller must give the items back via restore_items().
+     */
+    public static function take_items_for_issue(): ?array {
+        if ( ! is_user_logged_in() ) return null;
+
+        global $wpdb;
+        $user_id = get_current_user_id();
+        $items   = self::get_items();
+        if ( empty( $items ) ) return null;
+
+        $deleted = $wpdb->delete(
+            $wpdb->usermeta,
+            [ 'user_id' => $user_id, 'meta_key' => self::USERMETA_KEY ],
+            [ '%d', '%s' ]
+        );
+        wp_cache_delete( $user_id, 'user_meta' );
+
+        return $deleted ? $items : null;
+    }
+
+    /** Gives back items taken by take_items_for_issue() when issuing failed */
+    public static function restore_items( array $items ): void {
+        self::save_items( $items );
+    }
+
     public static function count_items( ?array $items = null ): int {
         $items = $items ?? self::get_items();
         return count( $items );
@@ -290,14 +321,17 @@ class AHP_Cart {
     public static function ajax_add(): void {
         self::verify_nonce_or_die();
 
+        // WordPress adds slashes to $_POST; without wp_unslash a description such
+        // as 6" or 1/2' was stored with backslashes ( 6\" ).
+        $post   = wp_unslash( $_POST );
         $result = self::add_item( [
-            'table_id'    => $_POST['table_id']    ?? 0,
-            'row_hash'    => $_POST['row_hash']    ?? '',
-            'description' => $_POST['description'] ?? '',
-            'code'        => $_POST['code']         ?? '',
-            'unit_price'  => $_POST['unit_price']   ?? 0,
-            'unit'        => $_POST['unit']         ?? '',
-            'quantity'    => $_POST['quantity']     ?? 1,
+            'table_id'    => $post['table_id']    ?? 0,
+            'row_hash'    => $post['row_hash']    ?? '',
+            'description' => $post['description'] ?? '',
+            'code'        => $post['code']         ?? '',
+            'unit_price'  => $post['unit_price']   ?? 0,
+            'unit'        => $post['unit']         ?? '',
+            'quantity'    => $post['quantity']     ?? 1,
         ] );
 
         if ( ! $result['ok'] ) {

@@ -3,7 +3,7 @@
  * Plugin Name: Ahan Proforma
  * Plugin URI: https://github.com/moeinoa/
  * Description: Converts price table rows (Ahan Price Tables plugin) into proforma invoices, without requiring WooCommerce.
- * Version: 1.0.9
+ * Version: 1.0.10
  * Author: Moein Akbari
  * Author URI: https://moein-akbari.ir/
  * Requires at least: 6.0
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AHP_VERSION',    '1.0.9' );
+define( 'AHP_VERSION',    '1.0.10' );
 define( 'AHP_DB_VERSION', '1.1.2' ); // 1.1.2: explicit access_token column guarantee via ALTER TABLE independent of dbDelta (fixes "Unknown column" error on the live site)
 // Kept separate from AHP_DB_VERSION so role capability changes (with no
 // database schema change) apply automatically on next load, without needing
@@ -67,7 +67,12 @@ $ahpUpdateChecker = PucFactory::buildUpdateChecker(
 // Tell it to look at GitHub "Releases" (tagged versions) rather than
 // just the latest commit on the branch.
 $ahpUpdateChecker->getVcsApi()->enableReleaseAssets();
-$ahpUpdateChecker->setAuthentication( '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' );
+
+// توکن GitHub (فقط برای ریپوی خصوصی) هرگز داخل کد قرار نمی‌گیرد؛ در wp-config.php
+// تعریف می‌شود:  define( 'AHP_GITHUB_TOKEN', 'ghp_...' );
+if ( defined( 'AHP_GITHUB_TOKEN' ) && AHP_GITHUB_TOKEN ) {
+    $ahpUpdateChecker->setAuthentication( AHP_GITHUB_TOKEN );
+}
 /* ── Install/upgrade ───────────────────────────────────────────────────── */
 
 register_activation_hook( __FILE__, function () {
@@ -78,6 +83,17 @@ register_activation_hook( __FILE__, function () {
 register_deactivation_hook( __FILE__, function () {
     // Roles and tables are intentionally NOT removed on deactivation, to avoid data loss.
     // Full removal only happens via uninstall.php and on the admin's explicit request.
+    // Only the scheduled housekeeping event is removed.
+    wp_clear_scheduled_hook( 'ahp_daily_cleanup' );
+} );
+
+/* ── Daily housekeeping (expired OTP rows, empty guest carts) ──────────── */
+
+add_action( 'ahp_daily_cleanup', [ 'AHP_DB', 'cleanup_expired' ] );
+add_action( 'init', function () {
+    if ( ! wp_next_scheduled( 'ahp_daily_cleanup' ) ) {
+        wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', 'ahp_daily_cleanup' );
+    }
 } );
 
 add_action( 'plugins_loaded', function () {

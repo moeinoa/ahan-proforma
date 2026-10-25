@@ -89,7 +89,7 @@ class AHP_Auth {
     public static function ajax_request_code(): void {
         check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 
-        $mobile = self::normalize_mobile( sanitize_text_field( $_POST['mobile'] ?? '' ) );
+        $mobile = self::normalize_mobile( sanitize_text_field( wp_unslash( $_POST['mobile'] ?? '' ) ) );
         if ( ! $mobile ) {
             wp_send_json_error( [ 'message' => __( 'The mobile number is invalid.', 'ahan-proforma' ) ], 400 );
         }
@@ -102,6 +102,14 @@ class AHP_Auth {
             ], 429 );
         }
 
+        // Per-IP rate limit: the per-number limit alone doesn't stop one client
+        // from burning SMS credit by cycling through many different numbers.
+        if ( ! self::ip_within_request_limit() ) {
+            wp_send_json_error( [
+                'message' => __( 'You have made too many requests; please try again shortly.', 'ahan-proforma' ),
+            ], 429 );
+        }
+
         $existing_user = self::find_user_by_mobile( $mobile );
 
         $pending_first = null;
@@ -109,8 +117,8 @@ class AHP_Auth {
 
         if ( ! $existing_user ) {
             // New user: first/last name are required
-            $pending_first = sanitize_text_field( $_POST['first_name'] ?? '' );
-            $pending_last  = sanitize_text_field( $_POST['last_name']  ?? '' );
+            $pending_first = sanitize_text_field( wp_unslash( $_POST['first_name'] ?? '' ) );
+            $pending_last  = sanitize_text_field( wp_unslash( $_POST['last_name']  ?? '' ) );
 
             if ( $pending_first === '' || $pending_last === '' ) {
                 wp_send_json_error( [
@@ -158,8 +166,8 @@ class AHP_Auth {
     public static function ajax_verify_code(): void {
         check_ajax_referer( self::NONCE_ACTION, 'nonce' );
 
-        $mobile = self::normalize_mobile( sanitize_text_field( $_POST['mobile'] ?? '' ) );
-        $code   = sanitize_text_field( $_POST['code'] ?? '' );
+        $mobile = self::normalize_mobile( sanitize_text_field( wp_unslash( $_POST['mobile'] ?? '' ) ) );
+        $code   = sanitize_text_field( wp_unslash( $_POST['code'] ?? '' ) );
 
         if ( ! $mobile || $code === '' ) {
             wp_send_json_error( [ 'message' => __( 'The submitted data is invalid.', 'ahan-proforma' ) ], 400 );
@@ -366,6 +374,32 @@ class AHP_Auth {
         update_user_meta( $user_id, self::USERMETA_MOBILE, $mobile );
 
         return $user_id;
+    }
+
+    /**
+     * Counts one code request for the caller's IP and says whether it is still
+     * within the limit (default: 10 requests / 10 minutes, deliberately generous
+     * so offices behind one shared IP are not affected). Adjustable via the
+     * ahp_otp_ip_limit filter: [ max_requests, window_seconds ]; max 0 disables it.
+     */
+    private static function ip_within_request_limit(): bool {
+        $ip = self::client_ip();
+        if ( ! $ip ) {
+            return true;
+        }
+
+        [ $max, $window ] = apply_filters( 'ahp_otp_ip_limit', [ 10, 10 * MINUTE_IN_SECONDS ] );
+        if ( (int) $max <= 0 ) {
+            return true;
+        }
+
+        $key   = 'ahp_otp_ip_' . md5( $ip );
+        $count = (int) get_transient( $key );
+        if ( $count >= (int) $max ) {
+            return false;
+        }
+        set_transient( $key, $count + 1, (int) $window );
+        return true;
     }
 
     private static function client_ip(): ?string {

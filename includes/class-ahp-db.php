@@ -238,15 +238,14 @@ class AHP_DB {
             ) );
         }
 
-        // Atomic increment at the database level (UPDATE ... = value + 1), then read the new value
+        // Atomic increment at the database level. LAST_INSERT_ID(expr) stores the
+        // new value per connection, so the following read can never return the
+        // value produced by a concurrent request (a plain UPDATE then SELECT can).
         $wpdb->query( $wpdb->prepare(
-            "UPDATE {$wpdb->options} SET option_value = option_value + 1 WHERE option_name = %s",
+            "UPDATE {$wpdb->options} SET option_value = LAST_INSERT_ID( option_value + 1 ) WHERE option_name = %s",
             $option_name
         ) );
-        $val = $wpdb->get_var(
-            $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", $option_name )
-        );
-        return (int) $val;
+        return (int) $wpdb->get_var( 'SELECT LAST_INSERT_ID()' );
     }
 
     /* ── Invoices: base CRUD (more methods added in Phase 4/5) ─────────────── */
@@ -435,6 +434,17 @@ class AHP_DB {
         return $result !== false;
     }
 
+    /**
+     * Removes an invoice together with its line items. Only used to roll back
+     * a half-issued invoice when saving its line items fails (see
+     * AHP_Invoice::issue_from_cart), so that no empty/partial document remains.
+     */
+    public static function delete_invoice( int $invoice_id ): void {
+        global $wpdb;
+        $wpdb->delete( self::table_items(), [ 'invoice_id' => $invoice_id ], [ '%d' ] );
+        $wpdb->delete( self::table_invoices(), [ 'id' => $invoice_id ], [ '%d' ] );
+    }
+
     /** Delete a proforma invoice line item as an admin (Phase 5 addendum) */
     public static function delete_item( int $item_id ): bool {
         global $wpdb;
@@ -507,14 +517,42 @@ class AHP_DB {
     /** Number of code requests from a number in the last N minutes (for send-rate limiting) */
     public static function count_recent_otp_requests( string $mobile, int $minutes ): int {
         global $wpdb;
+        // created_at is stored with the site's clock (current_time), so the
+        // cutoff must use the same clock. Comparing with MySQL's NOW() broke the
+        // window whenever the database timezone differed from the site timezone.
+        $cutoff = wp_date( 'Y-m-d H:i:s', time() - $minutes * MINUTE_IN_SECONDS );
         return (int) $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT COUNT(*) FROM " . self::table_otp() . "
-                 WHERE mobile = %s AND created_at >= DATE_SUB(NOW(), INTERVAL %d MINUTE)",
+                 WHERE mobile = %s AND created_at >= %s",
                 $mobile,
-                $minutes
+                $cutoff
             )
         );
+    }
+
+    /**
+     * Daily housekeeping (scheduled as ahp_daily_cleanup):
+     *  - OTP rows older than 7 days (codes expire after 2 minutes; the rows are
+     *    only useful for the short rate-limit window)
+     *  - guest-cart options that are empty (a cart emptied/merged earlier).
+     *    Carts that still hold items are never touched.
+     * Invoices and their items are never deleted here.
+     */
+    public static function cleanup_expired(): void {
+        global $wpdb;
+
+        $cutoff = wp_date( 'Y-m-d H:i:s', time() - 7 * DAY_IN_SECONDS );
+        $wpdb->query( $wpdb->prepare(
+            "DELETE FROM " . self::table_otp() . " WHERE created_at < %s",
+            $cutoff
+        ) );
+
+        $wpdb->query( $wpdb->prepare(
+            "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s AND option_value = %s",
+            $wpdb->esc_like( 'ahp_cart_guest_' ) . '%',
+            'a:0:{}'
+        ) );
     }
 
     public static function increment_otp_attempts( int $id ): void {

@@ -54,8 +54,10 @@ class AHP_Invoice {
             return [ 'ok' => false, 'message' => __( 'Please log in to your account first to issue a proforma invoice.', 'ahan-proforma' ) ];
         }
 
-        $items = AHP_Cart::get_items();
-        if ( empty( $items ) ) {
+        // Atomic claim of the cart: a double-click / two tabs can never issue two
+        // invoices from the same cart. Items are given back if anything fails below.
+        $items = AHP_Cart::take_items_for_issue();
+        if ( $items === null ) {
             return [ 'ok' => false, 'message' => __( 'Your proforma cart is empty.', 'ahan-proforma' ) ];
         }
 
@@ -105,12 +107,13 @@ class AHP_Invoice {
             if ( defined( 'WP_DEBUG' ) && WP_DEBUG && $wpdb->last_error ) {
                 error_log( 'AHP_Invoice::issue_from_cart insert_invoice failed: ' . $wpdb->last_error );
             }
+            AHP_Cart::restore_items( $items );
             return [ 'ok' => false, 'message' => __( 'Error saving the proforma invoice; please try again.', 'ahan-proforma' ) ];
         }
 
         $sort = 0;
         foreach ( $items as $item ) {
-            AHP_DB::insert_item( [
+            $item_id = AHP_DB::insert_item( [
                 'invoice_id'      => $invoice_id,
                 'source_table_id' => $item['table_id'] ?: null,
                 'source_row_hash' => $item['row_hash'] ?: null,
@@ -122,6 +125,18 @@ class AHP_Invoice {
                 'line_total'      => (int) round( $item['unit_price'] * $item['quantity'] ),
                 'sort_order'      => $sort++,
             ] );
+
+            if ( ! $item_id ) {
+                // A line item failed to save: never leave a partial invoice behind
+                // and never lose the customer's cart.
+                global $wpdb;
+                if ( defined( 'WP_DEBUG' ) && WP_DEBUG && $wpdb->last_error ) {
+                    error_log( 'AHP_Invoice::issue_from_cart insert_item failed: ' . $wpdb->last_error );
+                }
+                AHP_DB::delete_invoice( $invoice_id );
+                AHP_Cart::restore_items( $items );
+                return [ 'ok' => false, 'message' => __( 'Error saving the proforma invoice; please try again.', 'ahan-proforma' ) ];
+            }
         }
 
         AHP_Cart::clear();
