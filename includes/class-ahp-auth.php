@@ -22,15 +22,15 @@ defined( 'ABSPATH' ) || exit;
  * separate username field is collected from the user.
  *
  * Rate limiting (sensible defaults, changeable via filter):
- *  - max 3 code requests per 10 minutes per number
+ *  - max 5 code requests per 10 minutes per number
  *  - max 5 wrong attempts per issued code
  */
 class AHP_Auth {
 
     private const CODE_LENGTH        = 5;
     private const CODE_TTL_SECONDS   = 2 * MINUTE_IN_SECONDS;
-    private const MAX_REQUESTS_WINDOW_MIN = 2;
-    private const MAX_REQUESTS_PER_WINDOW = 2;
+    private const MAX_REQUESTS_WINDOW_MIN = 10;
+    private const MAX_REQUESTS_PER_WINDOW = 5;
     private const MAX_VERIFY_ATTEMPTS = 5;
     private const NONCE_ACTION       = 'ahp_auth_action';
     private const USERMETA_MOBILE    = 'ahp_mobile';
@@ -99,6 +99,7 @@ class AHP_Auth {
         if ( $recent >= self::MAX_REQUESTS_PER_WINDOW ) {
             wp_send_json_error( [
                 'message' => __( 'You have made too many requests; please try again shortly.', 'ahan-proforma' ),
+                'reason'  => 'number_limit',
             ], 429 );
         }
 
@@ -107,6 +108,7 @@ class AHP_Auth {
         if ( ! self::ip_within_request_limit() ) {
             wp_send_json_error( [
                 'message' => __( 'You have made too many requests; please try again shortly.', 'ahan-proforma' ),
+                'reason'  => 'ip_limit',
             ], 429 );
         }
 
@@ -143,8 +145,12 @@ class AHP_Auth {
         $send_result = AHP_SMS_Gateway::send_otp( $mobile, $code );
 
         if ( ! $send_result['ok'] ) {
+            // A failed send must not count against the user's request quota.
+            AHP_DB::delete_otp( (int) $otp_id );
+            error_log( '[ahan-proforma] OTP SMS failed: ' . wp_json_encode( $send_result ) );
             wp_send_json_error( [
                 'message' => __( 'Sending the SMS failed; please try again later.', 'ahan-proforma' ),
+                'reason'  => 'sms_failed',
             ], 502 );
         }
 
@@ -283,7 +289,7 @@ class AHP_Auth {
         $code      = self::generate_code();
         $code_hash = wp_hash_password( $code );
 
-        AHP_DB::insert_otp( [
+        $otp_id = AHP_DB::insert_otp( [
             'mobile'             => $mobile,
             'code_hash'          => $code_hash,
             'pending_first_name' => null,
@@ -294,6 +300,8 @@ class AHP_Auth {
 
         $send_result = AHP_SMS_Gateway::send_otp( $mobile, $code );
         if ( ! $send_result['ok'] ) {
+            AHP_DB::delete_otp( (int) $otp_id );
+            error_log( '[ahan-proforma] OTP SMS failed: ' . wp_json_encode( $send_result ) );
             return [ 'ok' => false, 'message' => __( 'Sending the SMS failed; please try again later.', 'ahan-proforma' ) ];
         }
 

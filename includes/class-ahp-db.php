@@ -520,7 +520,7 @@ class AHP_DB {
         // created_at is stored with the site's clock (current_time), so the
         // cutoff must use the same clock. Comparing with MySQL's NOW() broke the
         // window whenever the database timezone differed from the site timezone.
-        $cutoff = wp_date( 'Y-m-d H:i:s', time() - $minutes * MINUTE_IN_SECONDS );
+        $cutoff = self::site_time_ago( $minutes * MINUTE_IN_SECONDS );
         return (int) $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT COUNT(*) FROM " . self::table_otp() . "
@@ -542,7 +542,7 @@ class AHP_DB {
     public static function cleanup_expired(): void {
         global $wpdb;
 
-        $cutoff = wp_date( 'Y-m-d H:i:s', time() - 7 * DAY_IN_SECONDS );
+        $cutoff = self::site_time_ago( 7 * DAY_IN_SECONDS );
         $wpdb->query( $wpdb->prepare(
             "DELETE FROM " . self::table_otp() . " WHERE created_at < %s",
             $cutoff
@@ -553,6 +553,28 @@ class AHP_DB {
             $wpdb->esc_like( 'ahp_cart_guest_' ) . '%',
             'a:0:{}'
         ) );
+    }
+
+    /**
+     * Returns "now minus N seconds" as a Gregorian 'Y-m-d H:i:s' string in the
+     * site's timezone -- the same clock current_time('mysql') uses when rows
+     * are stored.
+     *
+     * Do NOT use wp_date()/date_i18n() for this: Persian-calendar plugins
+     * (WP-Parsidate, WP-Jalali, ...) make them return Jalali dates (1405-...),
+     * and comparing that string with Gregorian values (2026-...) in SQL makes
+     * every row look "recent", which permanently locked users out of login.
+     * DateTime::format() is never filtered by those plugins.
+     */
+    public static function site_time_ago( int $seconds ): string {
+        $dt = new DateTime( 'now', wp_timezone() );
+        $dt->setTimestamp( time() - $seconds );
+        return $dt->format( 'Y-m-d H:i:s' );
+    }
+
+    public static function delete_otp( int $id ): void {
+        global $wpdb;
+        $wpdb->delete( self::table_otp(), [ 'id' => $id ], [ '%d' ] );
     }
 
     public static function increment_otp_attempts( int $id ): void {
