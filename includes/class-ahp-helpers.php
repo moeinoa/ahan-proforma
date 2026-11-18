@@ -140,7 +140,7 @@ class AHP_Helpers {
             'pending'  => __( 'Pending review', 'ahan-proforma' ),
             'approved' => __( 'Approved', 'ahan-proforma' ),
             'rejected' => __( 'Rejected', 'ahan-proforma' ),
-            'expired'  => __( 'Expired', 'ahan-proforma' ),
+            'expired'  => __( 'Referred to sales team', 'ahan-proforma' ),
         ];
         return $labels[ $status ] ?? $status;
     }

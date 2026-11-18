@@ -187,7 +187,7 @@ $site_name = get_bloginfo( 'name' );
     }
     .ahp-inv-watermark.status-pending  { color: rgba(217, 119, 6, 0.18); }
     .ahp-inv-watermark.status-rejected { color: rgba(185, 28, 28, 0.18); }
-    .ahp-inv-watermark.status-expired  { color: rgba(107, 114, 128, 0.18); }
+    .ahp-inv-watermark.status-expired  { color: rgba(107, 114, 128, 0.18); font-size: 60px; letter-spacing: 2px; }
     .ahp-inv-wrap { position: relative; z-index: 1; }
 </style>
 <?php

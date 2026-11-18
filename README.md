@@ -210,6 +210,12 @@ Auto-updates are delivered through the bundled Plugin Update Checker from **GitH
 
 ## Changelog
 
+### 1.0.15
+- The `expired` invoice status is now labelled **"Referred to sales team"** everywhere it is shown (admin list/filter, customer account, printed invoice watermark). The stored status key stays `expired`, so existing invoices need no migration.
+
+### 1.0.14
+- **UI:** in the admin invoices list, status select / Apply / Delete are now three separate columns, and delete is a trash icon (no text button). Controls sit in their own cells and submit hidden forms via the `form=""` attribute.
+
 ### 1.0.13
 - **New:** admin can permanently delete a whole proforma invoice (with all its rows) from the invoices list, with a confirmation prompt, nonce + capability checks. Invoice numbers are never reused, so a deleted number leaves a gap in the sequence.
 

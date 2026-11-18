@@ -514,7 +514,7 @@ msgid "Rejected"
 msgstr ""
 
 #: includes/class-ahp-helpers.php:114 includes/class-ahp-admin.php:181
-msgid "Expired"
+msgid "Referred to sales team"
 msgstr ""
 
 #: includes/class-ahp-invoice.php:54 includes/class-ahp-cart.php:351
@@ -813,4 +813,8 @@ msgstr ""
 
 #: templates/admin-invoices-list.php:0
 msgid "Delete proforma invoice"
+msgstr ""
+
+#: templates/admin-invoices-list.php:0
+msgid "Change status"
 msgstr ""

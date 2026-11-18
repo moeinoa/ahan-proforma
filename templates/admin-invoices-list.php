@@ -64,12 +64,14 @@ foreach ( AHP_Helpers::allowed_units() as $u ) {
                 <th><?php esc_html_e( 'Final amount (Toman)', 'ahan-proforma' ); ?></th>
                 <th><?php esc_html_e( 'Status', 'ahan-proforma' ); ?></th>
                 <th><?php esc_html_e( 'Date issued', 'ahan-proforma' ); ?></th>
-                <th><?php esc_html_e( 'Actions', 'ahan-proforma' ); ?></th>
+                <th style="width:150px;"><?php esc_html_e( 'Change status', 'ahan-proforma' ); ?></th>
+                <th style="width:70px;"><span class="screen-reader-text"><?php esc_html_e( 'Apply', 'ahan-proforma' ); ?></span></th>
+                <th style="width:50px;"><span class="screen-reader-text"><?php esc_html_e( 'Delete proforma invoice', 'ahan-proforma' ); ?></span></th>
             </tr>
         </thead>
         <tbody>
         <?php if ( empty( $items ) ) : ?>
-            <tr><td colspan="8"><?php esc_html_e( 'No proforma invoices were found.', 'ahan-proforma' ); ?></td></tr>
+            <tr><td colspan="10"><?php esc_html_e( 'No proforma invoices were found.', 'ahan-proforma' ); ?></td></tr>
         <?php else : ?>
             <?php foreach ( $items as $invoice ) :
                 $row_id        = 'ahp-inv-row-' . (int) $invoice['id'];
@@ -102,33 +104,41 @@ foreach ( AHP_Helpers::allowed_units() as $u ) {
                         <span class="ahp-invoice-card-date"><?php echo esc_html( AHP_Helpers::format_jalali_date( $invoice['created_at'] ) ); ?></span>
                     </td>
                     <td>
-                        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                        <select name="new_status" form="ahp-status-form-<?php echo (int) $invoice['id']; ?>" style="max-width:100%;">
+                            <?php foreach ( [ 'pending', 'approved', 'rejected', 'expired' ] as $st ) : ?>
+                                <option value="<?php echo esc_attr( $st ); ?>" <?php selected( $invoice['status'], $st ); ?>>
+                                    <?php echo esc_html( AHP_Helpers::invoice_status_label( $st ) ); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php /* The forms hold only hidden fields; their visible controls sit in the neighbouring cells via the form="" attribute, so each control gets its own column. */ ?>
+                        <form id="ahp-status-form-<?php echo (int) $invoice['id']; ?>" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
                             <?php wp_nonce_field( 'ahp_update_invoice_status' ); ?>
                             <input type="hidden" name="action" value="ahp_update_invoice_status">
                             <input type="hidden" name="invoice_id" value="<?php echo esc_attr( $invoice['id'] ); ?>">
                             <input type="hidden" name="status_filter" value="<?php echo esc_attr( $status_filter ); ?>">
                             <input type="hidden" name="paged" value="<?php echo esc_attr( $paged ); ?>">
-                            <select name="new_status">
-                                <?php foreach ( [ 'pending', 'approved', 'rejected', 'expired' ] as $st ) : ?>
-                                    <option value="<?php echo esc_attr( $st ); ?>" <?php selected( $invoice['status'], $st ); ?>>
-                                        <?php echo esc_html( AHP_Helpers::invoice_status_label( $st ) ); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                            <button type="submit" class="button button-secondary"><?php esc_html_e( 'Apply', 'ahan-proforma' ); ?></button>
                         </form>
-                        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:6px;" onsubmit="return confirm('<?php echo esc_js( __( 'Permanently delete this proforma invoice and all of its rows? This cannot be undone.', 'ahan-proforma' ) ); ?>');">
+                    </td>
+                    <td>
+                        <button type="submit" form="ahp-status-form-<?php echo (int) $invoice['id']; ?>" class="button button-secondary"><?php esc_html_e( 'Apply', 'ahan-proforma' ); ?></button>
+                    </td>
+                    <td style="text-align:center;">
+                        <button type="submit" form="ahp-delete-form-<?php echo (int) $invoice['id']; ?>" class="button-link button-link-delete" style="text-decoration:none; cursor:pointer;" title="<?php esc_attr_e( 'Delete proforma invoice', 'ahan-proforma' ); ?>">
+                            <span class="dashicons dashicons-trash" aria-hidden="true"></span>
+                            <span class="screen-reader-text"><?php esc_html_e( 'Delete proforma invoice', 'ahan-proforma' ); ?></span>
+                        </button>
+                        <form id="ahp-delete-form-<?php echo (int) $invoice['id']; ?>" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" onsubmit="return confirm('<?php echo esc_js( __( 'Permanently delete this proforma invoice and all of its rows? This cannot be undone.', 'ahan-proforma' ) ); ?>');">
                             <?php wp_nonce_field( 'ahp_delete_invoice' ); ?>
                             <input type="hidden" name="action" value="ahp_delete_invoice">
                             <input type="hidden" name="invoice_id" value="<?php echo esc_attr( $invoice['id'] ); ?>">
                             <input type="hidden" name="status_filter" value="<?php echo esc_attr( $status_filter ); ?>">
                             <input type="hidden" name="paged" value="<?php echo esc_attr( $paged ); ?>">
-                            <button type="submit" class="button button-link-delete"><?php esc_html_e( 'Delete proforma invoice', 'ahan-proforma' ); ?></button>
                         </form>
                     </td>
                 </tr>
                 <tr id="<?php echo esc_attr( $row_id ); ?>" class="ahp-accordion-panel" hidden>
-                    <td colspan="8" style="background:#f6f7f7;">
+                    <td colspan="10" style="background:#f6f7f7;">
                         <table class="wp-list-table widefat" style="margin:8px 0;">
                             <thead>
                                 <tr>
@@ -204,6 +214,12 @@ foreach ( AHP_Helpers::allowed_units() as $u ) {
         </div>
     <?php endif; ?>
 </div>
+
+<style>
+.ahp-delete-icon-hover,
+.wp-list-table .button-link-delete .dashicons{color:#b32d2e;}
+.wp-list-table .button-link-delete:hover .dashicons{color:#8a2424;}
+</style>
 
 <script>
 document.addEventListener('click', function (e) {

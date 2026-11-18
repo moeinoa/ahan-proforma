@@ -191,7 +191,7 @@ class AHP_Admin {
             'pending'  => __( 'Pending review', 'ahan-proforma' ),
             'approved' => __( 'Approved', 'ahan-proforma' ),
             'rejected' => __( 'Rejected', 'ahan-proforma' ),
-            'expired'  => __( 'Expired', 'ahan-proforma' ),
+            'expired'  => __( 'Referred to sales team', 'ahan-proforma' ),
         ];
 
         include AHP_PLUGIN_DIR . 'templates/admin-invoices-list.php'; // variables: $items, $items_by_invoice, $total, $total_pages, $paged, $per_page, $status_filter, $statuses

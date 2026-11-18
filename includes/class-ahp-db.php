@@ -53,7 +53,7 @@ class AHP_DB {
          * buyer_phone      : buyer's contact number at issuance time (snapshot)
          * subtotal         : grand total (Rials) - sum of all line totals; there's no discount, so subtotal = total
          * total            : final amount (Rials) - currently equal to subtotal (kept for future discount/tax development)
-         * status           : pending | approved | rejected | expired  (default: pending - changed only manually by the admin)
+         * status           : pending | approved | rejected | expired  ("expired" is shown to people as "Referred to sales team"; the stored key is unchanged) (default: pending - changed only manually by the admin)
          * access_token     : a random 32-character string used to build the
          *                    unguessable public URL for the proforma
          *                    invoice's HTML output page (Phase 4); the raw
