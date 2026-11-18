@@ -68,6 +68,17 @@ Format: `{Jalali year}/A/{4-digit, zero-padded sequence number}` — e.g. `1405/
 
 Customers log in/sign up with just a **mobile number** and a **5-digit SMS code** — no password field exists anywhere in the customer-facing flow. `user_login` is the normalized mobile number itself (e.g. `09121234567`). New users are created with a long random password that is never shown or sent to anyone; every future login is via a fresh OTP code.
 
+#### OTP rate limiting
+
+| Limit | Default | Where it is counted |
+|---|---|---|
+| Per mobile number | 5 requests / 10 minutes | `wp_ahp_otp_requests` table (`AHP_DB::count_recent_otp_requests()`) |
+| Per IP address | 10 requests / 10 minutes | Transient `ahp_otp_ip_<md5(ip)>` (adjustable with the `ahp_otp_ip_limit` filter: `[ max, window_seconds ]`; `max = 0` disables it) |
+| Wrong code attempts | 5 per issued code | `attempts` column of the OTP row |
+
+- A request whose SMS could not be sent is **deleted from the table immediately**, so a gateway failure never consumes the user's quota; the real gateway error is written to `error_log`.
+- Every `429`/`502` JSON error from `ahp_request_code` carries a `reason` field (`number_limit`, `ip_limit`, `sms_failed`) to make debugging from the browser's Network tab trivial.
+
 ### LiteSpeed Cache compatibility
 
 The site runs LiteSpeed Cache, which has caused several nonce/caching issues during development. Key patterns adopted to work around this:
@@ -130,7 +141,7 @@ xgettext \
   --keyword=_x:1,2c --keyword=_ex:1,2c \
   --keyword=_n:1,2 --keyword=_nx:1,2,4c \
   --keyword=esc_attr_x:1,2c --keyword=esc_html_x:1,2c \
-  --package-name="Ahan Proforma" --package-version="0.9.9" \
+  --package-name="Ahan Proforma" --package-version="1.0.12" \
   --copyright-holder="Ahan Shahr" \
   -o languages/ahan-proforma.pot \
   $(find . -name "*.php")
@@ -159,6 +170,7 @@ JavaScript files (`assets/js/*.js`) contain **no hardcoded UI text**. All labels
 | `ahp_cart_page_url` / `ahp_account_page_url` / `ahp_account_edit_url` | Override the URLs used for the cart/account/edit-info pages |
 | `ahp_login_redirect_url` | Where a customer is sent after a standalone-page login (not used by the popup flow) |
 | `ahp_customer_admin_redirect_url` | Where a customer is redirected if they try to access wp-admin |
+| `ahp_otp_ip_limit` | Per-IP OTP request limit, `[ max_requests, window_seconds ]` (default `[ 10, 600 ]`, `max = 0` disables it) |
 | `ahp_sms_settings` | Override SMS gateway settings programmatically |
 | `ahp_sms_otp_request_body` | Filter the outgoing request body sent to Farapayamak's `SendOTP` endpoint |
 | `ahp_sms_text_request_body` | Filter the outgoing request body sent to Farapayamak's `SendSMS` (free-text) endpoint |
@@ -179,4 +191,34 @@ JavaScript files (`assets/js/*.js`) contain **no hardcoded UI text**. All labels
 
 - The site uses **LiteSpeed Cache**; see the "LiteSpeed Cache compatibility" section above for the specific patterns this plugin relies on to avoid stale-nonce bugs.
 - `dbDelta()` can silently fail to add new columns to an already-existing table via `ALTER TABLE`. `AHP_DB::ensure_access_token_column()` works around this by checking `information_schema.COLUMNS` directly and running an explicit, idempotent `ALTER TABLE` if the column is missing.
+- **Never use `wp_date()` / `date_i18n()` to build values that are compared against stored dates.** Persian-calendar plugins (WP-Parsidate, WP-Jalali, ...) make them return Jalali dates (`1405-08-27`), while rows are stored with `current_time('mysql')` in Gregorian (`2026-11-18`). Comparing those strings in SQL makes every row look "recent". This caused a real production incident in v1.0.11 and earlier: the OTP rate-limit counter counted *all* historical requests of a number, so any number with two or more past requests was locked out permanently (HTTP 429, "too many requests"). Since v1.0.12 all SQL cutoffs are built by `AHP_DB::site_time_ago()`, which uses `DateTime` + `wp_timezone()` and is never filtered by calendar plugins. Jalali conversion for *display* stays in `AHP_Helpers`.
+- **Redis / persistent object cache is compatible.** The only transient-based state is the per-IP OTP counter; everything else (OTP codes, per-number counter, carts of logged-in users, invoices) lives in database tables/options. Enabling or flushing Redis is safe.
 - Farapayamak's SMS API returns **HTTP 200 even on business-logic failures** (wrong credentials, blocked IP, etc.) — the actual result must always be read from the `RetStatus` field in the JSON body, never from the HTTP status code alone.
+
+---
+
+## Releasing a new version
+
+Auto-updates are delivered through the bundled Plugin Update Checker from **GitHub Releases** of `moeinoa/ahan-proforma` (release assets are enabled).
+
+1. Bump the version in **both** places in `ahan-proforma.php`: the `Version:` header and `define( 'AHP_VERSION', ... )` (keep `AHP_DB_VERSION` unchanged unless the schema changed).
+2. Commit and push to `main` (`git pull --rebase origin main` first if the push is rejected).
+3. On GitHub: **Releases → Draft a new release**, create tag `vX.Y.Z` (must match the header version), and **attach the plugin zip** whose single top-level folder is `ahan-proforma/`. Do not rely on GitHub's automatic "Source code" zip — its folder name (`ahan-proforma-X.Y.Z`) makes WordPress install the plugin in the wrong directory.
+4. In WordPress: **Dashboard → Updates → Check again**, then update.
+
+---
+
+## Changelog
+
+### 1.0.13
+- **New:** admin can permanently delete a whole proforma invoice (with all its rows) from the invoices list, with a confirmation prompt, nonce + capability checks. Invoice numbers are never reused, so a deleted number leaves a gap in the sequence.
+
+### 1.0.12
+- **Fix:** login lockout ("too many requests") on sites running a Persian-calendar plugin. The OTP rate-limit window and the daily cleanup cutoff are now computed with `AHP_DB::site_time_ago()` instead of `wp_date()` (see *Known environmental notes*).
+- OTP rate limit changed from 2 requests / 2 minutes to 5 requests / 10 minutes per number (matches the documented behaviour).
+- A failed SMS send no longer consumes the rate-limit quota; the gateway error is logged to `error_log`.
+- `ahp_request_code` error responses include a `reason` field.
+
+### 1.0.11
+- Updater test release (version number only).
+

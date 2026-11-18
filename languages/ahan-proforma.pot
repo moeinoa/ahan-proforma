@@ -27,8 +27,8 @@ msgstr ""
 #: ahan-proforma.php:123
 #, php-format
 msgid ""
-"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will "
-"not work. Go to %s to set it up."
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
+" not work. Go to %s to set it up."
 msgstr ""
 
 #: ahan-proforma.php:124
@@ -41,10 +41,10 @@ msgstr ""
 
 #: templates/admin-settings.php:15
 msgid ""
-"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined "
-"in wp-config.php and currently takes priority over the values on this page. "
-"To manage everything from this panel, remove those constants from wp-config."
-"php."
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
+" in wp-config.php and currently takes priority over the values on this page."
+" To manage everything from this panel, remove those constants from wp-"
+"config.php."
 msgstr ""
 
 #: templates/admin-settings.php:23
@@ -193,8 +193,8 @@ msgstr ""
 
 #: templates/account-tab-invoices.php:20
 msgid ""
-"No proforma invoices have been issued for you yet. Any proforma invoices you "
-"issue will show up here."
+"No proforma invoices have been issued for you yet. Any proforma invoices you"
+" issue will show up here."
 msgstr ""
 
 #: templates/account-tab-invoices.php:39
@@ -635,7 +635,8 @@ msgstr ""
 msgid "Error; please try again"
 msgstr ""
 
-#: includes/class-ahp-cart.php:417 includes/class-ahp-table-integration.php:133
+#: includes/class-ahp-cart.php:417
+#: includes/class-ahp-table-integration.php:133
 #: includes/class-ahp-table-integration.php:146
 msgid "Add to invoice"
 msgstr ""
@@ -787,9 +788,29 @@ msgid "Ahan Proforma"
 msgstr ""
 
 #. Description of the plugin
-msgid "Converts price table rows (Ahan Price Tables plugin) into proforma invoices, without requiring WooCommerce."
+msgid ""
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
+" without requiring WooCommerce."
 msgstr ""
 
 #. Author of the plugin
 msgid "Moein Akbari"
+msgstr ""
+
+#: templates/admin-invoices-list.php:0
+msgid "The proforma invoice was deleted."
+msgstr ""
+
+#: templates/admin-invoices-list.php:0
+msgid "Deleting the proforma invoice failed; it was not found."
+msgstr ""
+
+#: templates/admin-invoices-list.php:0
+msgid ""
+"Permanently delete this proforma invoice and all of its rows? This cannot be"
+" undone."
+msgstr ""
+
+#: templates/admin-invoices-list.php:0
+msgid "Delete proforma invoice"
 msgstr ""

@@ -24,6 +24,10 @@ foreach ( AHP_Helpers::allowed_units() as $u ) {
         <div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'The proforma invoice row was updated and the document total was recomputed.', 'ahan-proforma' ); ?></p></div>
     <?php elseif ( $notice === 'item_deleted' ) : ?>
         <div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'The proforma invoice row was deleted and the document total was recomputed.', 'ahan-proforma' ); ?></p></div>
+    <?php elseif ( $notice === 'invoice_deleted' ) : ?>
+        <div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'The proforma invoice was deleted.', 'ahan-proforma' ); ?></p></div>
+    <?php elseif ( $notice === 'invoice_delete_failed' ) : ?>
+        <div class="notice notice-error is-dismissible"><p><?php esc_html_e( 'Deleting the proforma invoice failed; it was not found.', 'ahan-proforma' ); ?></p></div>
     <?php elseif ( $notice === 'item_update_failed' ) : ?>
         <div class="notice notice-error is-dismissible"><p><?php esc_html_e( 'Saving the row failed; the input was invalid.', 'ahan-proforma' ); ?></p></div>
     <?php endif; ?>
@@ -112,6 +116,14 @@ foreach ( AHP_Helpers::allowed_units() as $u ) {
                                 <?php endforeach; ?>
                             </select>
                             <button type="submit" class="button button-secondary"><?php esc_html_e( 'Apply', 'ahan-proforma' ); ?></button>
+                        </form>
+                        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:6px;" onsubmit="return confirm('<?php echo esc_js( __( 'Permanently delete this proforma invoice and all of its rows? This cannot be undone.', 'ahan-proforma' ) ); ?>');">
+                            <?php wp_nonce_field( 'ahp_delete_invoice' ); ?>
+                            <input type="hidden" name="action" value="ahp_delete_invoice">
+                            <input type="hidden" name="invoice_id" value="<?php echo esc_attr( $invoice['id'] ); ?>">
+                            <input type="hidden" name="status_filter" value="<?php echo esc_attr( $status_filter ); ?>">
+                            <input type="hidden" name="paged" value="<?php echo esc_attr( $paged ); ?>">
+                            <button type="submit" class="button button-link-delete"><?php esc_html_e( 'Delete proforma invoice', 'ahan-proforma' ); ?></button>
                         </form>
                     </td>
                 </tr>

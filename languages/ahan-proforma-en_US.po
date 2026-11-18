@@ -28,11 +28,11 @@ msgstr ""
 #: ahan-proforma.php:123
 #, php-format
 msgid ""
-"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will "
-"not work. Go to %s to set it up."
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
+" not work. Go to %s to set it up."
 msgstr ""
-"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will "
-"not work. Go to %s to set it up."
+"The SMS gateway (Farapayamak) is not configured yet; customer OTP login will"
+" not work. Go to %s to set it up."
 
 #: ahan-proforma.php:124
 msgid "Ahan Proforma ▸ Settings"
@@ -44,15 +44,15 @@ msgstr "Ahan Shahr Proforma Settings"
 
 #: templates/admin-settings.php:15
 msgid ""
-"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined "
-"in wp-config.php and currently takes priority over the values on this page. "
-"To manage everything from this panel, remove those constants from wp-config."
-"php."
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
+" in wp-config.php and currently takes priority over the values on this page."
+" To manage everything from this panel, remove those constants from wp-"
+"config.php."
 msgstr ""
-"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined "
-"in wp-config.php and currently takes priority over the values on this page. "
-"To manage everything from this panel, remove those constants from wp-config."
-"php."
+"One or more of AHP_SMS_USERNAME / AHP_SMS_PASSWORD / AHP_SMS_FROM is defined"
+" in wp-config.php and currently takes priority over the values on this page."
+" To manage everything from this panel, remove those constants from wp-"
+"config.php."
 
 #: templates/admin-settings.php:23
 msgid "Color and style"
@@ -208,11 +208,11 @@ msgstr "My proforma invoices"
 
 #: templates/account-tab-invoices.php:20
 msgid ""
-"No proforma invoices have been issued for you yet. Any proforma invoices you "
-"issue will show up here."
+"No proforma invoices have been issued for you yet. Any proforma invoices you"
+" issue will show up here."
 msgstr ""
-"No proforma invoices have been issued for you yet. Any proforma invoices you "
-"issue will show up here."
+"No proforma invoices have been issued for you yet. Any proforma invoices you"
+" issue will show up here."
 
 #: templates/account-tab-invoices.php:39
 msgid "View"
@@ -665,7 +665,8 @@ msgstr "Added to proforma invoice"
 msgid "Error; please try again"
 msgstr "Error; please try again"
 
-#: includes/class-ahp-cart.php:417 includes/class-ahp-table-integration.php:133
+#: includes/class-ahp-cart.php:417
+#: includes/class-ahp-table-integration.php:133
 #: includes/class-ahp-table-integration.php:146
 msgid "Add to invoice"
 msgstr "Add to invoice"
@@ -822,12 +823,32 @@ msgstr "Ahan Proforma"
 
 #. Description of the plugin
 msgid ""
-"Converts price table rows (Ahan Price Tables plugin) into proforma invoices, "
-"without requiring WooCommerce."
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
+" without requiring WooCommerce."
 msgstr ""
-"Converts price table rows (Ahan Price Tables plugin) into proforma invoices, "
-"without requiring WooCommerce."
+"Converts price table rows (Ahan Price Tables plugin) into proforma invoices,"
+" without requiring WooCommerce."
 
 #. Author of the plugin
 msgid "Moein Akbari"
 msgstr "Moein Akbari"
+
+#: templates/admin-invoices-list.php:0
+msgid "The proforma invoice was deleted."
+msgstr "The proforma invoice was deleted."
+
+#: templates/admin-invoices-list.php:0
+msgid "Deleting the proforma invoice failed; it was not found."
+msgstr "Deleting the proforma invoice failed; it was not found."
+
+#: templates/admin-invoices-list.php:0
+msgid ""
+"Permanently delete this proforma invoice and all of its rows? This cannot be"
+" undone."
+msgstr ""
+"Permanently delete this proforma invoice and all of its rows? This cannot be"
+" undone."
+
+#: templates/admin-invoices-list.php:0
+msgid "Delete proforma invoice"
+msgstr "Delete proforma invoice"

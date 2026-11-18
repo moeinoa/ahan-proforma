@@ -31,6 +31,7 @@ class AHP_Admin {
     private const NONCE_ACTION_STATUS = 'ahp_update_invoice_status';
     private const NONCE_ACTION_ITEM_UPDATE = 'ahp_update_invoice_item';
     private const NONCE_ACTION_ITEM_DELETE = 'ahp_delete_invoice_item';
+    private const NONCE_ACTION_INVOICE_DELETE = 'ahp_delete_invoice';
 
     /** wp_options key names for this phase's settings */
     public const OPT_COLOR_PRIMARY       = 'ahp_color_primary';
@@ -75,6 +76,7 @@ class AHP_Admin {
         add_action( 'admin_post_ahp_update_invoice_status', [ __CLASS__, 'handle_update_invoice_status' ] );
         add_action( 'admin_post_ahp_update_invoice_item', [ __CLASS__, 'handle_update_invoice_item' ] );
         add_action( 'admin_post_ahp_delete_invoice_item', [ __CLASS__, 'handle_delete_invoice_item' ] );
+        add_action( 'admin_post_ahp_delete_invoice',      [ __CLASS__, 'handle_delete_invoice' ] );
 
         // Injecting custom colors: both on the site front end (for the
         // proforma column/cart/login-form buttons) and on the standalone
@@ -159,6 +161,17 @@ class AHP_Admin {
             'per_page' => $per_page,
             'paged'    => $paged,
         ] );
+
+        // If the last invoice of the current page was just deleted, the page
+        // is now empty: fall back to the new last page instead of showing nothing.
+        if ( empty( $result['items'] ) && $paged > 1 && $result['total'] > 0 ) {
+            $paged  = (int) ceil( $result['total'] / $per_page );
+            $result = AHP_DB::get_all_invoices( [
+                'status'   => $status_filter,
+                'per_page' => $per_page,
+                'paged'    => $paged,
+            ] );
+        }
 
         $items       = $result['items'];
         $total       = $result['total'];
@@ -291,6 +304,37 @@ class AHP_Admin {
             $redirect_args['ahp_notice'] = 'item_deleted';
         } else {
             $redirect_args['ahp_notice'] = 'item_update_failed';
+        }
+
+        wp_safe_redirect( add_query_arg( $redirect_args, admin_url( 'admin.php' ) ) );
+        exit;
+    }
+
+    /**
+     * Handle an admin deleting a whole proforma invoice (header + all of its
+     * line items) from the list. Permanent. Invoice numbers are never reused:
+     * the sequence counter keeps increasing, so a deleted number leaves a gap.
+     */
+    public static function handle_delete_invoice(): void {
+        self::guard();
+
+        check_admin_referer( self::NONCE_ACTION_INVOICE_DELETE );
+
+        $invoice_id = isset( $_POST['invoice_id'] ) ? (int) $_POST['invoice_id'] : 0;
+
+        $redirect_args = [ 'page' => self::MENU_SLUG ];
+        if ( ! empty( $_POST['status_filter'] ) ) {
+            $redirect_args['status'] = sanitize_key( wp_unslash( $_POST['status_filter'] ) );
+        }
+        if ( ! empty( $_POST['paged'] ) ) {
+            $redirect_args['paged'] = (int) $_POST['paged'];
+        }
+
+        if ( $invoice_id && AHP_DB::get_invoice( $invoice_id ) ) {
+            AHP_DB::delete_invoice( $invoice_id );
+            $redirect_args['ahp_notice'] = 'invoice_deleted';
+        } else {
+            $redirect_args['ahp_notice'] = 'invoice_delete_failed';
         }
 
         wp_safe_redirect( add_query_arg( $redirect_args, admin_url( 'admin.php' ) ) );
