@@ -304,7 +304,7 @@
             code:        btn.getAttribute( 'data-ahp-code' ),
             unit_price:  btn.getAttribute( 'data-ahp-price' ),
             unit:        btn.getAttribute( 'data-ahp-unit' ),
-            quantity:    1,
+            quantity:    btn.getAttribute( 'data-ahp-quantity' ) || 1,
         } ).then( function ( res ) {
             btn.disabled = false;
             if ( res.success ) {
@@ -436,6 +436,18 @@
             }
         } );
     }
+
+    AHP_CART.addMany = function ( items ) {
+        return ajax( 'ahp_cart_add_many', { items: JSON.stringify( items ) } ).then( function ( res ) {
+            if ( ! res || ! res.success ) {
+                throw new Error( ( res && res.data && res.data.message ) || AHP_CART.i18n.error );
+            }
+            updateAllCounts( res.data.count, true );
+            refreshOpenWidgets( res.data );
+            openDrawer( res.data );
+            return res.data;
+        } );
+    };
 
     document.addEventListener( 'click', function ( e ) {
         var removeBtn = e.target.closest( '[data-ahp-remove]' );

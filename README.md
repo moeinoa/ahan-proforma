@@ -210,6 +210,10 @@ Auto-updates are delivered through the bundled Plugin Update Checker from **GitH
 
 ## Changelog
 
+### 1.0.16
+- Honor the selected quantity on add-to-proforma buttons.
+- Add a validated batch endpoint for adding all weight-calculator rows in one request.
+
 ### 1.0.15
 - The `expired` invoice status is now labelled **"Referred to sales team"** everywhere it is shown (admin list/filter, customer account, printed invoice watermark). The stored status key stays `expired`, so existing invoices need no migration.
 
@@ -227,4 +231,3 @@ Auto-updates are delivered through the bundled Plugin Update Checker from **GitH
 
 ### 1.0.11
 - Updater test release (version number only).
-

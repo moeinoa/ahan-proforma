@@ -32,6 +32,8 @@ class AHP_Cart {
 
         add_action( 'wp_ajax_ahp_cart_add',              [ __CLASS__, 'ajax_add' ] );
         add_action( 'wp_ajax_nopriv_ahp_cart_add',       [ __CLASS__, 'ajax_add' ] );
+        add_action( 'wp_ajax_ahp_cart_add_many',         [ __CLASS__, 'ajax_add_many' ] );
+        add_action( 'wp_ajax_nopriv_ahp_cart_add_many',  [ __CLASS__, 'ajax_add_many' ] );
         add_action( 'wp_ajax_ahp_cart_remove',           [ __CLASS__, 'ajax_remove' ] );
         add_action( 'wp_ajax_nopriv_ahp_cart_remove',    [ __CLASS__, 'ajax_remove' ] );
         add_action( 'wp_ajax_ahp_cart_update_qty',       [ __CLASS__, 'ajax_update_qty' ] );
@@ -338,6 +340,30 @@ class AHP_Cart {
             wp_send_json_error( [ 'message' => __( 'The row data is invalid.', 'ahan-proforma' ) ], 400 );
         }
         wp_send_json_success( [ 'count' => $result['count'], 'items' => self::format_items_for_response( $result['items'] ) ] );
+    }
+
+    /** Add a validated batch of rows in one request. */
+    public static function ajax_add_many(): void {
+        self::verify_nonce_or_die();
+        $raw_items = isset( $_POST['items'] ) ? json_decode( wp_unslash( $_POST['items'] ), true ) : null;
+        if ( ! is_array( $raw_items ) || ! $raw_items || count( $raw_items ) > 200 ) {
+            wp_send_json_error( [ 'message' => __( 'The row data is invalid.', 'ahan-proforma' ) ], 400 );
+        }
+        $validated = [];
+        foreach ( $raw_items as $raw ) {
+            if ( ! is_array( $raw ) || null === ( $item = self::sanitize_item( $raw ) ) ) {
+                wp_send_json_error( [ 'message' => __( 'The row data is invalid.', 'ahan-proforma' ) ], 400 );
+            }
+            $validated[] = $item;
+        }
+        foreach ( $validated as $item ) {
+            $result = self::add_item( $item );
+            if ( ! $result['ok'] ) {
+                wp_send_json_error( [ 'message' => __( 'The row data is invalid.', 'ahan-proforma' ) ], 400 );
+            }
+        }
+        $items = self::get_items();
+        wp_send_json_success( [ 'count' => self::count_items( $items ), 'items' => self::format_items_for_response( $items ) ] );
     }
 
     public static function ajax_remove(): void {
