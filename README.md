@@ -210,6 +210,9 @@ Auto-updates are delivered through the bundled Plugin Update Checker from **GitH
 
 ## Changelog
 
+### 1.0.17
+- Missing Parsedown no longer interrupts update checks or changelog loading.
+
 ### 1.0.16
 - Honor the selected quantity on add-to-proforma buttons.
 - Add a validated batch endpoint for adding all weight-calculator rows in one request.

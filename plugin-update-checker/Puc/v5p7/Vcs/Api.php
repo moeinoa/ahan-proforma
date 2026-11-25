@@ -305,7 +305,7 @@ if ( !class_exists(Api::class, false) ):
 				return null;
 			}
 
-			return Parsedown::instance()->text($changelog);
+			return class_exists(Parsedown::class) ? Parsedown::instance()->text($changelog) : null;
 		}
 
 		/**
